@@ -1,153 +1,95 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt-PT">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Adicionar Planta - FloraGest</title>
-  <meta name="theme-color" content="#14532d">
-  <link rel="manifest" href="../manifest.json">
-  <link rel="icon" href="../assets/images/logo.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="../assets/css/styles.css">
-  <link rel="stylesheet" href="../assets/css/components/app-shell.css">
-  <!-- Tailwind CSS CDN -->
+  <title>Nova Planta - Flora</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
-  <style>
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    }
-    ::-webkit-scrollbar {
-      width: 0px;
-    }
-  </style>
+  <script type="module" src="../assets/js/app.js"></script>
+  <link rel="stylesheet" href="../assets/css/styles.css">
 </head>
-<body class="bg-slate-200 min-h-screen flex justify-center items-center p-2 text-slate-800">
+<body class="bg-[#f2f7f4] min-h-screen flex justify-center items-center p-2">
 
-  <!-- Frame de Telemóvel Mobile -->
-  <div class="w-full max-w-[390px] bg-[#eef7ee] min-h-[820px] rounded-[40px] shadow-2xl flex flex-col overflow-hidden relative border-[8px] border-slate-400/30">
+  <div class="phone-frame w-full max-w-[390px] h-[820px] shadow-2xl flex flex-col overflow-hidden relative justify-between">
     
-    <!-- Top Bar Navigation -->
-    <header class="px-4 pt-4 pb-2 flex items-center justify-between bg-[#eef7ee] sticky top-0 z-10">
-      <button type="button" onclick="history.back()" class="w-9 h-9 rounded-full border border-dashed border-blue-400 flex items-center justify-center text-slate-700 bg-transparent">
-        <i data-lucide="arrow-left" class="w-5 h-5"></i>
+    <header class="px-5 pt-4 pb-3 flex items-center justify-between glass-header sticky top-0 z-20">
+      <button type="button" onclick="history.back()" class="w-8 h-8 rounded-xl bg-white/80 text-slate-700 flex items-center justify-center shadow-sm">
+        <i data-lucide="arrow-left" class="w-4 h-4"></i>
       </button>
-
-      <div class="flex items-center gap-1.5">
-        <i data-lucide="sprout" class="w-4 h-4 text-emerald-700"></i>
-        <h1 class="text-sm font-bold text-slate-800">Adicionar Planta</h1>
-      </div>
-
-      <div class="flex items-center gap-2">
-        <button type="button" class="text-slate-700">
-          <i data-lucide="more-vertical" class="w-5 h-5"></i>
-        </button>
-        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=100&q=80" alt="User" class="w-8 h-8 rounded-full object-cover">
-      </div>
+      <span class="text-sm font-bold text-slate-900">Nova planta</span>
+      <div class="w-8"></div>
     </header>
 
-    <!-- Conteúdo Scrollável -->
-    <div class="px-5 py-3 space-y-4 overflow-y-auto flex-1 pb-24">
-
-      <!-- Badge & Título -->
-      <div>
-        <span class="inline-flex items-center gap-1 bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider">
-          <i data-lucide="leaf" class="w-3 h-3"></i> NOVO CULTIVO
-        </span>
-        <h2 class="text-xl font-bold text-slate-900 mt-1">Nova Planta</h2>
-        <p class="text-xs text-slate-500">Adiciona uma companheira verde à tua coleção.</p>
-      </div>
-
-      <!-- Área para Carregar / Tirar Foto -->
-      <div onclick="document.getElementById('photo-input').click()" class="bg-white rounded-2xl p-6 text-center shadow-sm border border-emerald-50 cursor-pointer flex flex-col items-center justify-center hover:bg-emerald-50/40 transition">
-        <div class="w-12 h-12 rounded-full bg-emerald-100/70 text-emerald-800 flex items-center justify-center mb-2">
+    <div class="px-5 py-3 space-y-4 overflow-y-auto flex-1 no-scrollbar pb-24">
+      
+      <!-- Carregamento de fotografia -->
+      <div class="glass-card rounded-3xl p-6 text-center space-y-2 border-2 border-dashed border-emerald-900/20 soft-shadow">
+        <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-[#1b4332] flex items-center justify-center mx-auto">
           <i data-lucide="camera" class="w-6 h-6"></i>
         </div>
-        <h3 class="text-sm font-bold text-slate-800">Tirar foto ou escolher da galeria</h3>
-        <p class="text-[11px] text-slate-400 mt-0.5">Regista o primeiro dia da tua muda</p>
-        <input type="file" id="photo-input" accept="image/*" class="hidden" onchange="previewPhoto(event)">
+        <p class="text-xs font-bold text-slate-800">Adicionar fotografia</p>
+        <p class="text-[10px] text-slate-400">Tira uma fotografia ou escolhe uma imagem da galeria</p>
       </div>
 
-      <!-- Card do Formulário Secundário -->
-      <div class="bg-white rounded-2xl p-4 shadow-sm space-y-3.5 border border-emerald-50">
-        
-        <!-- Nome ou Alcunha -->
+      <form id="plant-form" class="space-y-3">
         <div>
-          <label class="block text-[11px] font-bold text-slate-700 mb-1">
-            Nome ou alcunha <span class="text-teal-500">•</span>
+          <label class="block text-[11px] font-bold text-slate-700 mb-1 flex items-center gap-1.5">
+            <i data-lucide="tag" class="w-3.5 h-3.5 text-[#2d6a4f]"></i> Nome da planta
           </label>
-          <div class="relative">
-            <input type="text" id="plant-nickname" placeholder="ex: O meu Cacto da sala, Sofia..." class="w-full bg-[#eef7ee]/60 rounded-xl px-3.5 py-2.5 text-xs text-slate-700 placeholder-slate-400 focus:outline-none pr-9">
-            <i data-lucide="flower-2" class="w-4 h-4 text-slate-300 absolute right-3 top-3"></i>
-          </div>
+          <input type="text" name="name" required maxlength="60" placeholder="Ex.: Costela-de-Adão da sala" class="w-full bg-white rounded-2xl px-3.5 py-2.5 text-xs text-slate-700 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#1b4332]">
         </div>
 
-        <!-- Tipo de Planta -->
         <div>
-          <div class="flex items-center justify-between mb-1">
-            <label class="block text-[11px] font-bold text-slate-700">Tipo de Planta</label>
-            <span class="text-[10px] text-slate-400">Sugestões rápidas</span>
-          </div>
-          <div class="relative mb-2">
-            <input type="text" placeholder="Pesquisar ou escolher abaixo..." class="w-full bg-[#eef7ee]/60 rounded-xl px-3.5 py-2.5 text-xs text-slate-700 placeholder-slate-400 focus:outline-none pr-9">
-            <i data-lucide="sprout" class="w-4 h-4 text-slate-300 absolute right-3 top-3"></i>
-          </div>
-
-          <!-- Chips de Sugestão -->
-          <div class="flex flex-wrap gap-1.5" id="species-group">
-            <button type="button" onclick="toggleChip(this)" class="px-3 py-1 rounded-full text-[11px] bg-slate-100 text-slate-600">Cacto</button>
-            <button type="button" onclick="toggleChip(this)" class="px-3 py-1 rounded-full text-[11px] bg-slate-100 text-slate-600">Suculenta</button>
-            <button type="button" onclick="toggleChip(this)" class="px-3 py-1 rounded-full text-[11px] bg-slate-100 text-slate-600">Espada-de-são-jorge</button>
-            <button type="button" onclick="toggleChip(this)" class="px-3 py-1 rounded-full text-[11px] bg-[#2d6a4f] text-white font-semibold">Jibóia</button>
-            <button type="button" onclick="toggleChip(this)" class="px-3 py-1 rounded-full text-[11px] bg-slate-100 text-slate-600">Samambaia</button>
-            <button type="button" onclick="toggleChip(this)" class="px-3 py-1 rounded-full text-[11px] bg-slate-100 text-slate-600">Ficus</button>
-            <button type="button" onclick="toggleChip(this)" class="px-3 py-1 rounded-full text-[11px] bg-slate-100 text-slate-600">Lavanda</button>
-          </div>
+          <label class="block text-[11px] font-bold text-slate-700 mb-1 flex items-center gap-1.5">
+            <i data-lucide="sprout" class="w-3.5 h-3.5 text-[#2d6a4f]"></i> Espécie científica
+          </label>
+          <input type="text" name="species" maxlength="60" placeholder="Ex.: Monstera deliciosa" class="w-full bg-white rounded-2xl px-3.5 py-2.5 text-xs text-slate-700 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#1b4332]">
         </div>
 
-        <!-- Localização / Divisão -->
-        <div>
-          <div class="flex items-center justify-between mb-1">
-            <label class="block text-[11px] font-bold text-slate-700">Localização / Divisão</label>
-            <span class="text-[10px] text-slate-400">Onde ela vai morar?</span>
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="block text-[11px] font-bold text-slate-700 mb-1 flex items-center gap-1.5">
+              <i data-lucide="droplet" class="w-3.5 h-3.5 text-[#2d6a4f]"></i> Rega (dias)
+            </label>
+            <input type="number" name="wateringDays" min="1" max="365" placeholder="7" class="w-full bg-white rounded-2xl px-3.5 py-2.5 text-xs text-slate-700 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#1b4332]">
           </div>
-          <div class="relative">
-            <select class="w-full bg-[#eef7ee]/60 rounded-xl px-3.5 py-2.5 text-xs text-slate-700 appearance-none focus:outline-none">
-              <option>Sala de estar</option>
-              <option>Varanda</option>
-              <option>Quarto</option>
-              <option>Cozinha</option>
-              <option>Escritório</option>
+          <div>
+            <label class="block text-[11px] font-bold text-slate-700 mb-1 flex items-center gap-1.5">
+              <i data-lucide="sun" class="w-3.5 h-3.5 text-[#2d6a4f]"></i> Exposição
+            </label>
+            <select name="light" class="w-full bg-white rounded-2xl px-3.5 py-2.5 text-xs text-slate-700 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#1b4332]">
+              <option>Luz indireta</option>
+              <option>Sol direto</option>
+              <option>Sombra</option>
             </select>
-            <i data-lucide="chevron-down" class="w-4 h-4 text-slate-500 absolute right-3 top-3 pointer-events-none"></i>
           </div>
         </div>
 
-      </div>
+        <div>
+          <label for="plant-photo" class="block text-[11px] font-bold text-slate-700 mb-1">Fotografia (opcional)</label>
+          <input id="plant-photo" type="file" name="photo" accept="image/*" class="w-full bg-white rounded-xl px-3 py-2 text-xs border border-slate-200">
+        </div>
 
-      <!-- Secção de Plano de Cuidados -->
-      <div class="bg-white rounded-2xl p-4 shadow-sm border border-emerald-50">
-        <h3 class="text-sm font-bold text-slate-800">Plano de Cuidados</h3>
-        <p class="text-xs text-slate-400">Define os lembretes de rega e luz</p>
-      </div>
-
-    </div>
-
-    <!-- Botão Fixo de Guardar Planta -->
-    <div class="absolute bottom-4 left-4 right-4 z-20">
-      <div class="relative flex flex-col items-center">
-        <span class="bg-blue-600 text-white text-[9px] font-bold px-1.5 py-0.2 rounded mb-1 self-start">Connected</span>
-        <button type="button" onclick="savePlant()" class="w-full bg-[#2d6a4f] hover:bg-emerald-900 text-white font-bold py-3.5 px-4 rounded-2xl shadow-lg flex items-center justify-center gap-2 border border-dashed border-blue-400">
-          <i data-lucide="check-circle-2" class="w-5 h-5"></i>
-          Guardar Planta
+        <p id="plant-message" role="status" aria-live="polite" class="text-xs text-red-700"></p>
+        <button type="submit" class="w-full bg-[#1b4332] text-white font-bold py-3 rounded-2xl shadow-lg shadow-[#1b4332]/20 flex items-center justify-center gap-2 mt-4">
+          <i data-lucide="check" class="w-4 h-4"></i> Guardar Planta
         </button>
-      </div>
+      </form>
     </div>
 
-    <!-- Ícone Lápis Flutuante Inferior -->
-    <div class="absolute -bottom-5 left-0 right-0 flex justify-center pointer-events-none z-30">
-      <div class="bg-slate-300 w-10 h-10 rounded-full flex items-center justify-center shadow-md border border-slate-400">
-        <i data-lucide="pencil" class="w-4 h-4 text-slate-800"></i>
+    <!-- Screen Switcher -->
+    <div id="screen-switcher" class="fixed top-3 right-3 z-50">
+      <button type="button" onclick="toggleScreenMenu()" class="bg-[#1b4332] text-white p-2 rounded-xl shadow-lg flex items-center justify-center">
+        <i data-lucide="layers" class="w-4 h-4"></i>
+      </button>
+      <div id="screen-menu" class="hidden absolute right-0 mt-2 w-44 bg-white rounded-2xl shadow-xl p-2 space-y-1 text-[11px] font-medium border border-slate-100">
+        <a href="../index.html" class="block px-2 py-1 rounded hover:bg-emerald-50">Início</a>
+        <a href="plants.html" class="block px-2 py-1 rounded hover:bg-emerald-50">Catálogo</a>
+        <a href="addPlant.html" class="block px-2 py-1 rounded hover:bg-emerald-50 font-bold text-[#1b4332]">Adicionar Planta</a>
+        <a href="editPlant.html" class="block px-2 py-1 rounded hover:bg-emerald-50">Editar Planta</a>
+        <a href="tasks.html" class="block px-2 py-1 rounded hover:bg-emerald-50">Tarefas</a>
+        <a href="profile.html" class="block px-2 py-1 rounded hover:bg-emerald-50">Perfil</a>
       </div>
     </div>
 
@@ -155,27 +97,7 @@
 
   <script>
     lucide.createIcons();
-
-    function previewPhoto(event) {
-      const file = event.target.files[0];
-      if (file) {
-        alert("Fotografia selecionada com sucesso!");
-      }
-    }
-
-    function toggleChip(button) {
-      const container = document.getElementById('species-group');
-      const buttons = container.querySelectorAll('button');
-      buttons.forEach(btn => {
-        btn.className = "px-3 py-1 rounded-full text-[11px] bg-slate-100 text-slate-600";
-      });
-      button.className = "px-3 py-1 rounded-full text-[11px] bg-[#2d6a4f] text-white font-semibold";
-    }
-
-    function savePlant() {
-      alert("Planta guardada com sucesso!");
-    }
+    function toggleScreenMenu() { document.getElementById('screen-menu').classList.toggle('hidden'); }
   </script>
-  <script type="module" src="../assets/js/app.js"></script>
 </body>
 </html>

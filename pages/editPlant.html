@@ -1,173 +1,74 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt-PT">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Editar Planta - FloraGest</title>
-  <meta name="theme-color" content="#14532d">
-  <link rel="manifest" href="../manifest.json">
-  <link rel="icon" href="../assets/images/logo.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="../assets/css/styles.css">
-  <link rel="stylesheet" href="../assets/css/components/app-shell.css">
-  <!-- Tailwind CSS CDN -->
+  <title>Editar Planta - Flora</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
-  <style>
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    }
-    ::-webkit-scrollbar {
-      width: 0px;
-    }
-  </style>
+  <script type="module" src="../assets/js/app.js"></script>
+  <link rel="stylesheet" href="../assets/css/styles.css">
 </head>
-<body class="bg-slate-200 min-h-screen flex justify-center items-center p-2 text-slate-800">
+<body class="bg-[#f2f7f4] min-h-screen flex justify-center items-center p-2">
 
-  <!-- Frame do Telemóvel -->
-  <div class="w-full max-w-[390px] bg-[#eef7ee] min-h-[820px] rounded-[40px] shadow-2xl flex flex-col overflow-hidden relative border-[8px] border-slate-400/30">
+  <div class="phone-frame w-full max-w-[390px] h-[820px] shadow-2xl flex flex-col overflow-hidden relative justify-between">
     
-    <!-- Cabeçalho Principal -->
-    <header class="px-4 pt-4 pb-2 flex items-center justify-between relative bg-[#eef7ee]">
-      <!-- Botão Voltar com indicação Connected -->
-      <div class="flex flex-col items-center">
-        <div class="relative">
-          <button type="button" onclick="history.back()" class="w-10 h-10 rounded-full border border-blue-400 border-dashed flex items-center justify-center bg-transparent text-slate-700">
-            <i data-lucide="arrow-left" class="w-5 h-5"></i>
-          </button>
-        </div>
-        <span class="bg-blue-600 text-white text-[9px] font-bold px-1.5 py-0.2 rounded mt-0.5">Connected</span>
-        <button type="button" class="border border-blue-400 border-dashed text-slate-600 text-xs px-2 py-0.5 rounded-full mt-1">Cancelar</button>
-      </div>
-
-      <!-- Títulos do Header (Adicionar Planta e Editar Planta) -->
-      <div class="text-center flex flex-col items-center -mt-2">
-        <div class="flex items-center gap-1.5 mb-1">
-          <i data-lucide="sprout" class="w-4 h-4 text-emerald-700"></i>
-          <span class="text-sm font-semibold text-slate-800">Adicionar Planta</span>
-        </div>
-        <h1 class="text-lg font-bold text-slate-900 leading-none">Editar Planta</h1>
-      </div>
-
-      <!-- Botão Guardar e Menu com indicação Connected -->
-      <div class="flex flex-col items-center">
-        <div class="flex items-center gap-2">
-          <button type="button" class="text-slate-700">
-            <i data-lucide="more-vertical" class="w-5 h-5"></i>
-          </button>
-          <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=100&q=80" alt="User" class="w-8 h-8 rounded-full object-cover">
-        </div>
-        <span class="bg-blue-600 text-white text-[9px] font-bold px-1.5 py-0.2 rounded mt-1">Connected</span>
-        <button type="button" form="plant-form" onclick="savePlant()" class="border border-blue-400 border-dashed text-emerald-800 font-semibold text-xs px-3 py-0.5 rounded-full mt-1">
-          Guardar
-        </button>
-      </div>
+    <header class="px-5 pt-4 pb-3 flex items-center justify-between glass-header sticky top-0 z-20">
+      <button type="button" onclick="history.back()" class="w-8 h-8 rounded-xl bg-white/80 text-slate-700 flex items-center justify-center shadow-sm">
+        <i data-lucide="arrow-left" class="w-4 h-4"></i>
+      </button>
+      <span class="text-sm font-bold text-slate-900">Editar planta</span>
+      <div class="w-8"></div>
     </header>
 
-    <!-- Corpo Scrollável -->
-    <div class="px-5 py-2 space-y-4 overflow-y-auto flex-1 pb-20">
-
-      <!-- Foto da Planta -->
-      <div class="flex flex-col items-center justify-center text-center mt-1">
-        <div class="relative cursor-pointer" onclick="document.getElementById('photo-input').click()">
-          <div class="w-28 h-28 rounded-full overflow-hidden border-2 border-emerald-100 shadow-sm relative">
-            <img id="plant-img-preview" src="https://images.unsplash.com/photo-1509423350716-97f9360b4e09?auto=format&fit=crop&w=400&q=80" alt="Cacto" class="w-full h-full object-cover">
-            <div class="absolute inset-0 bg-black/40 flex flex-col items-center justify-center text-white">
-              <i data-lucide="camera" class="w-5 h-5 mb-0.5"></i>
-              <span class="text-[11px] font-medium leading-tight">Alterar foto</span>
-            </div>
-          </div>
-        </div>
-        <input type="file" id="photo-input" accept="image/*" class="hidden" onchange="previewPhoto(event)">
-        <p class="text-[11px] text-slate-500 mt-2">Toque para atualizar a foto do seu cacto</p>
+    <div class="px-5 py-3 space-y-4 overflow-y-auto flex-1 no-scrollbar pb-24">
+      
+      <div class="relative h-40 rounded-2xl overflow-hidden soft-shadow">
+        <img src="https://images.unsplash.com/photo-1614594975525-e45190c55d0b?auto=format&fit=crop&w=400&q=80" alt="Costela-de-Adão" class="w-full h-full object-cover">
+        <button type="button" class="absolute bottom-2 right-2 bg-white/90 p-2 rounded-xl text-slate-800 shadow">
+          <i data-lucide="camera" class="w-4 h-4"></i>
+        </button>
       </div>
 
-      <form id="plant-form" onsubmit="event.preventDefault(); savePlant();" class="space-y-4">
-        
-        <!-- Nome da Planta -->
+      <form class="space-y-3">
         <div>
-          <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">NOME DA PLANTA</label>
-          <div class="relative">
-            <input type="text" id="plant-name" value="Cacto da Sala" required class="w-full bg-white rounded-xl px-4 py-2.5 text-sm font-medium text-slate-800 shadow-sm border border-emerald-50 focus:outline-none pr-10">
-            <i data-lucide="pencil" class="w-4 h-4 text-slate-300 absolute right-3 top-3"></i>
-          </div>
+          <label class="block text-[11px] font-bold text-slate-700 mb-1">Nome da planta</label>
+          <input type="text" value="Costela-de-Adão" class="w-full bg-white rounded-2xl px-3.5 py-2.5 text-xs border border-slate-200">
         </div>
 
-        <!-- Espécie / Categoria -->
         <div>
-          <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">ESPÉCIE / CATEGORIA</label>
-          <div class="flex flex-wrap gap-1.5">
-            <button type="button" class="px-3 py-1.5 rounded-full text-xs font-medium flex items-center gap-1.5 bg-[#14532d] text-white">
-              <i data-lucide="sprout" class="w-3.5 h-3.5"></i> Cacto
-            </button>
-            <button type="button" class="px-3 py-1.5 rounded-full text-xs font-medium bg-white text-slate-700 shadow-sm">
-              Suculenta
-            </button>
-            <button type="button" class="px-3 py-1.5 rounded-full text-xs font-medium bg-white text-slate-700 shadow-sm">
-              Foliagem Tropical
-            </button>
-            <button type="button" class="px-3 py-1.5 rounded-full text-xs font-medium bg-white text-slate-700 shadow-sm">
-              Samambaia
-            </button>
-          </div>
+          <label class="block text-[11px] font-bold text-slate-700 mb-1">Espécie</label>
+          <input type="text" value="Monstera Deliciosa" class="w-full bg-white rounded-2xl px-3.5 py-2.5 text-xs border border-slate-200">
         </div>
 
-        <!-- Local da Casa -->
-        <div>
-          <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">LOCAL DA CASA</label>
-          <div class="flex flex-wrap gap-1.5">
-            <button type="button" class="px-3 py-1.5 rounded-full text-xs font-medium flex items-center gap-1.5 bg-[#2d6a4f] text-white">
-              <i data-lucide="armchair" class="w-3.5 h-3.5"></i> Sala de estar
-            </button>
-            <button type="button" class="px-3 py-1.5 rounded-full text-xs font-medium flex items-center gap-1.5 bg-white text-slate-700 shadow-sm">
-              <i data-lucide="building" class="w-3.5 h-3.5 text-slate-400"></i> Varanda
-            </button>
-            <button type="button" class="px-3 py-1.5 rounded-full text-xs font-medium flex items-center gap-1.5 bg-white text-slate-700 shadow-sm">
-              <i data-lucide="bed" class="w-3.5 h-3.5 text-slate-400"></i> Quarto
-            </button>
-            <button type="button" class="px-3 py-1.5 rounded-full text-xs font-medium flex items-center gap-1.5 bg-white text-slate-700 shadow-sm">
-              <i data-lucide="waves" class="w-3.5 h-3.5 text-slate-400"></i> Cozinha
-            </button>
-            <button type="button" class="px-3 py-1.5 rounded-full text-xs font-medium flex items-center gap-1.5 bg-white text-slate-700 shadow-sm">
-              <i data-lucide="briefcase" class="w-3.5 h-3.5 text-slate-400"></i> Escritório
-            </button>
-          </div>
+        <div class="pt-2 flex gap-2">
+          <button type="button" onclick="window.location.href='plant.html'" class="flex-1 bg-[#1b4332] text-white font-bold py-3 rounded-2xl text-xs">
+            Guardar Alterações
+          </button>
+          <button type="button" onclick="window.location.href='plants.html'" class="bg-red-50 text-red-600 font-bold px-4 py-3 rounded-2xl text-xs flex items-center justify-center">
+            <i data-lucide="trash-2" class="w-4 h-4"></i>
+          </button>
         </div>
-
-        <!-- Frequência de Rega -->
-        <div class="bg-white rounded-2xl p-3.5 shadow-sm space-y-2.5">
-          <div class="flex items-center justify-between">
-            <div class="flex items-center gap-2">
-              <div class="w-7 h-7 rounded-full bg-teal-50 flex items-center justify-center text-teal-600">
-                <i data-lucide="droplet" class="w-4 h-4"></i>
-              </div>
-              <span class="text-sm font-semibold text-slate-800">Frequência de rega</span>
-            </div>
-            <label class="flex items-center gap-2 text-xs text-slate-600" for="watering-frequency">
-              Regar a cada
-              <input id="watering-frequency" type="number" min="1" value="14" class="w-16 rounded-lg border border-emerald-100 px-2 py-1">
-              dias
-            </label>
-          </div>
-        </div>
-        <button type="submit" class="w-full rounded-xl bg-[#2d6a4f] px-4 py-3 text-sm font-bold text-white">
-          Guardar alterações
-        </button>
       </form>
     </div>
-  </div>
-  <script>
-    function previewPhoto(event) {
-      const file = event.target.files && event.target.files[0];
-      if (file) {
-        document.getElementById("plant-img-preview").src = URL.createObjectURL(file);
-      }
-    }
 
-    function savePlant() {
-      alert("Alterações guardadas.");
-    }
+    <div id="screen-switcher" class="fixed top-3 right-3 z-50">
+      <button type="button" onclick="toggleScreenMenu()" class="bg-[#1b4332] text-white p-2 rounded-xl shadow-lg flex items-center justify-center">
+        <i data-lucide="layers" class="w-4 h-4"></i>
+      </button>
+      <div id="screen-menu" class="hidden absolute right-0 mt-2 w-44 bg-white rounded-2xl shadow-xl p-2 space-y-1 text-[11px] font-medium border border-slate-100">
+        <a href="../index.html" class="block px-2 py-1 rounded hover:bg-emerald-50">Início</a>
+        <a href="plants.html" class="block px-2 py-1 rounded hover:bg-emerald-50">Catálogo</a>
+        <a href="plant.html" class="block px-2 py-1 rounded hover:bg-emerald-50">Detalhes</a>
+        <a href="editPlant.html" class="block px-2 py-1 rounded hover:bg-emerald-50 font-bold text-[#1b4332]">Editar Planta</a>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    lucide.createIcons();
+    function toggleScreenMenu() { document.getElementById('screen-menu').classList.toggle('hidden'); }
   </script>
-  <script type="module" src="../assets/js/app.js"></script>
 </body>
 </html>

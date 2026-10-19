@@ -1,136 +1,81 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt-PT">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#14532d">
-    <title>Tarefas - Flora</title>
-    <link rel="manifest" href="../manifest.json">
-    <link rel="icon" href="../assets/images/logo.svg" type="image/svg+xml">
-    <link rel="stylesheet" href="../assets/css/styles.css">
-    <link rel="stylesheet" href="../assets/css/components/app-shell.css">
-    <script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tarefas - Flora</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script type="module" src="../assets/js/app.js"></script>
+  <link rel="stylesheet" href="../assets/css/styles.css">
 </head>
-<body class="bg-slate-200 min-h-screen p-4 text-slate-800">
-<main class="tasks-page">
+<body class="bg-[#f2f7f4] min-h-screen flex justify-center items-center p-2">
 
-    <div class="tasks-header">
+  <div class="phone-frame w-full max-w-[390px] h-[820px] shadow-2xl flex flex-col overflow-hidden relative justify-between">
+    
+    <header class="px-5 pt-4 pb-3 flex items-center justify-between glass-header sticky top-0 z-20">
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 rounded-xl bg-[#1b4332] text-white flex items-center justify-center shadow-md">
+          <i data-lucide="check-square" class="w-4 h-4"></i>
+        </div>
+        <span class="text-base font-extrabold text-[#1b4332] tracking-tight">Tarefas</span>
+      </div>
+    </header>
 
-        <p class="tasks-label">
-            ROTINA BOTÂNICA
+    <div class="px-5 py-3 space-y-3 overflow-y-auto flex-1 no-scrollbar pb-24">
+      <section aria-labelledby="watering-title" class="space-y-3">
+        <div>
+          <h2 id="watering-title" class="text-lg font-bold text-slate-900">Regas das tuas plantas</h2>
+          <p class="mt-1 text-xs text-slate-500">Agenda calculada a partir dos intervalos definidos no catálogo.</p>
+        </div>
+        <div data-watering-list class="space-y-2"></div>
+        <p data-watering-empty class="rounded-lg bg-white/70 px-4 py-8 text-center text-sm text-slate-500">
+          Ainda não tens plantas adicionadas. Adiciona uma planta para criar a tua agenda de rega.
         </p>
-
-        <div class="tasks-title-row">
-
-            <h1>Tarefas de Hoje</h1>
-
-            <div class="date-badge">
-                📅 18 Maio
-            </div>
-
-        </div>
-
+      </section>
     </div>
 
-    <div class="motivation-card">
+    <nav class="bg-white/90 backdrop-blur-md border-t border-emerald-900/10 px-4 py-2.5 flex justify-around items-center sticky bottom-0 z-20">
+      <button type="button" onclick="window.location.href='../index.html'" class="flex flex-col items-center gap-0.5 text-slate-400 hover:text-[#1b4332]">
+        <i data-lucide="home" class="w-5 h-5"></i>
+        <span class="text-[9px] font-medium">Início</span>
+      </button>
 
-        <p>
-            ✅ Todas as tarefas de ontem foram concluídas! As tuas plantas agradecem.
-        </p>
+      <button type="button" onclick="window.location.href='plants.html'" class="flex flex-col items-center gap-0.5 text-slate-400 hover:text-[#1b4332]">
+        <i data-lucide="sprout" class="w-5 h-5"></i>
+        <span class="text-[9px] font-medium">Plantas</span>
+      </button>
 
+      <button type="button" onclick="window.location.href='addPlant.html'" class="w-11 h-11 bg-[#1b4332] text-white rounded-2xl flex items-center justify-center shadow-lg shadow-[#1b4332]/30 -mt-5 hover:bg-[#2d6a4f] transition">
+        <i data-lucide="plus" class="w-6 h-6"></i>
+      </button>
+
+      <button type="button" class="flex flex-col items-center gap-0.5 text-[#1b4332] font-bold">
+        <i data-lucide="check-square" class="w-5 h-5"></i>
+        <span class="text-[9px]">Tarefas</span>
+      </button>
+
+      <button type="button" onclick="window.location.href='profile.html'" class="flex flex-col items-center gap-0.5 text-slate-400 hover:text-[#1b4332]">
+        <i data-lucide="user" class="w-5 h-5"></i>
+        <span class="text-[9px] font-medium">Perfil</span>
+      </button>
+    </nav>
+
+    <div id="screen-switcher" class="fixed top-3 right-3 z-50">
+      <button type="button" onclick="toggleScreenMenu()" class="bg-[#1b4332] text-white p-2 rounded-xl shadow-lg flex items-center justify-center">
+        <i data-lucide="layers" class="w-4 h-4"></i>
+      </button>
+      <div id="screen-menu" class="hidden absolute right-0 mt-2 w-44 bg-white rounded-2xl shadow-xl p-2 space-y-1 text-[11px] font-medium border border-slate-100">
+        <a href="../index.html" class="block px-2 py-1 rounded hover:bg-emerald-50">Início</a>
+        <a href="tasks.html" class="block px-2 py-1 rounded hover:bg-emerald-50 font-bold text-[#1b4332]">Tarefas</a>
+      </div>
     </div>
 
-    <div class="tasks-filters">
+  </div>
 
-        <button class="active-filter">
-            Todas (3)
-        </button>
-
-        <button>
-            Rega (1)
-        </button>
-
-        <button>
-            Cuidados (2)
-        </button>
-
-    </div>
-
-    <div class="tasks-summary">
-
-        <h3>Hoje • 3 pendentes</h3>
-
-        <span>Toque para concluir</span>
-
-    </div>
-
-    <!-- Rosa -->
-
-    <div class="task-card">
-
-        <div class="task-icon">🌹</div>
-
-        <div class="task-info">
-
-            <h3>Rosa</h3>
-
-            <p>Regar a planta do jardim.</p>
-
-            <small>🌞 Jardim • Rega leve</small>
-
-        </div>
-
-        <div class="task-check">
-            ✓
-        </div>
-
-    </div>
-
-    <!-- Aloe Vera -->
-
-    <div class="task-card">
-
-        <div class="task-icon">🌿</div>
-
-        <div class="task-info">
-
-            <h3>Aloe Vera</h3>
-
-            <p>Verificar humidade do solo.</p>
-
-            <small>🏠 Interior • Cuidados</small>
-
-        </div>
-
-        <div class="task-check">
-            ✓
-        </div>
-
-    </div>
-
-    <!-- Girassol -->
-
-    <div class="task-card">
-
-        <div class="task-icon">🌻</div>
-
-        <div class="task-info">
-
-            <h3>Girassol</h3>
-
-            <p>Verificar exposição solar.</p>
-
-            <small>☀ Exterior • Manutenção</small>
-
-        </div>
-
-        <div class="task-check">
-            ✓
-        </div>
-
-    </div>
-
-</main>
-<script type="module" src="../assets/js/app.js"></script>
+  <script>
+    lucide.createIcons();
+    function toggleScreenMenu() { document.getElementById('screen-menu').classList.toggle('hidden'); }
+  </script>
 </body>
 </html>
