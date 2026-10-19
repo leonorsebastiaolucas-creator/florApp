@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#14532d">
+    <title>Tarefas - Flora</title>
+    <link rel="manifest" href="../manifest.json">
+    <link rel="icon" href="../assets/images/logo.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <link rel="stylesheet" href="../assets/css/components/app-shell.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-200 min-h-screen p-4 text-slate-800">
+<main class="tasks-page">
+
+    <div class="tasks-header">
+
+        <p class="tasks-label">
+            ROTINA BOTÂNICA
+        </p>
+
+        <div class="tasks-title-row">
+
+            <h1>Tarefas de Hoje</h1>
+
+            <div class="date-badge">
+                📅 18 Maio
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="motivation-card">
+
+        <p>
+            ✅ Todas as tarefas de ontem foram concluídas! As tuas plantas agradecem.
+        </p>
+
+    </div>
+
+    <div class="tasks-filters">
+
+        <button class="active-filter">
+            Todas (3)
+        </button>
+
+        <button>
+            Rega (1)
+        </button>
+
+        <button>
+            Cuidados (2)
+        </button>
+
+    </div>
+
+    <div class="tasks-summary">
+
+        <h3>Hoje • 3 pendentes</h3>
+
+        <span>Toque para concluir</span>
+
+    </div>
+
+    <!-- Rosa -->
+
+    <div class="task-card">
+
+        <div class="task-icon">🌹</div>
+
+        <div class="task-info">
+
+            <h3>Rosa</h3>
+
+            <p>Regar a planta do jardim.</p>
+
+            <small>🌞 Jardim • Rega leve</small>
+
+        </div>
+
+        <div class="task-check">
+            ✓
+        </div>
+
+    </div>
+
+    <!-- Aloe Vera -->
+
+    <div class="task-card">
+
+        <div class="task-icon">🌿</div>
+
+        <div class="task-info">
+
+            <h3>Aloe Vera</h3>
+
+            <p>Verificar humidade do solo.</p>
+
+            <small>🏠 Interior • Cuidados</small>
+
+        </div>
+
+        <div class="task-check">
+            ✓
+        </div>
+
+    </div>
+
+    <!-- Girassol -->
+
+    <div class="task-card">
+
+        <div class="task-icon">🌻</div>
+
+        <div class="task-info">
+
+            <h3>Girassol</h3>
+
+            <p>Verificar exposição solar.</p>
+
+            <small>☀ Exterior • Manutenção</small>
+
+        </div>
+
+        <div class="task-check">
+            ✓
+        </div>
+
+    </div>
+
+</main>
+<script type="module" src="../assets/js/app.js"></script>
+</body>
+</html>

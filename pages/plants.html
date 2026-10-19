@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#14532d">
+    <title>As minhas plantas - Flora</title>
+    <link rel="manifest" href="../manifest.json">
+    <link rel="icon" href="../assets/images/logo.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <link rel="stylesheet" href="../assets/css/components/app-shell.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-200 min-h-screen p-4 text-slate-800">
+<main class="plants-page">
+
+    <div class="plants-header">
+
+        <div>
+            <p class="section-label">🌿 Jardim Interior</p>
+            <h1>As Minhas Plantas</h1>
+        </div>
+
+        <div class="plant-count">
+            4 cultivadas
+        </div>
+
+    </div>
+
+    <div class="search-container">
+        <input
+            type="text"
+            placeholder="Pesquisar por espécie ou nome..."
+        >
+    </div>
+
+    <div class="filters">
+
+        <button class="active-filter">Todas (4)</button>
+
+        <button>Sala (2)</button>
+
+        <button>Varanda (1)</button>
+
+        <button>Jardim (1)</button>
+
+    </div>
+
+    <div class="plant-card">
+
+        <div class="plant-image">
+            🌹
+        </div>
+
+        <div class="plant-info">
+
+            <h3>Rosa</h3>
+
+            <p class="scientific">
+                Rosa spp.
+            </p>
+
+            <p>📍 Jardim</p>
+
+            <div class="status perfect">
+                Saudável
+            </div>
+
+            <div class="watering">
+                Rega em 2 dias
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="plant-card">
+
+        <div class="plant-image">
+            🌻
+        </div>
+
+        <div class="plant-info">
+
+            <h3>Girassol</h3>
+
+            <p class="scientific">
+                Helianthus annuus
+            </p>
+
+            <p>📍 Exterior</p>
+
+            <div class="status perfect">
+                Saudável
+            </div>
+
+            <div class="watering">
+                 Rega em 3 dias
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="plant-card">
+
+        <div class="plant-image">
+            🌿
+        </div>
+
+        <div class="plant-info">
+
+            <h3>Aloe Vera</h3>
+
+            <p class="scientific">
+                Aloe vera
+            </p>
+
+            <p>📍 Varanda</p>
+
+            <div class="status warning">
+                Precisa de água
+            </div>
+
+            <div class="watering">
+                 Rega hoje
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="plant-card">
+
+        <div class="plant-image">
+            🌺
+        </div>
+
+        <div class="plant-info">
+
+            <h3>Hibisco</h3>
+
+            <p class="scientific">
+                Hibiscus rosa-sinensis
+            </p>
+
+            <p>📍 Jardim</p>
+
+            <div class="status perfect">
+                Saudável
+            </div>
+
+            <div class="watering">
+                Rega em 4 dias
+            </div>
+
+        </div>
+
+    </div>
+
+    <button
+        class="new-plant-btn"
+        onclick="window.location.href='addPlant.html'"
+    >
+        + Nova Planta
+    </button>
+
+</main>
+<script type="module" src="../assets/js/app.js"></script>
+</body>
+</html>

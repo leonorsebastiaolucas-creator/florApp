@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#14532d">
+    <title>Iniciar sessão - Flora</title>
+    <link rel="manifest" href="../manifest.json">
+    <link rel="icon" href="../assets/images/logo.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <link rel="stylesheet" href="../assets/css/components/app-shell.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="bg-slate-200 min-h-screen flex justify-center items-center p-4 text-slate-800">
+<main class="login-container">
+
+    <div class="logo-card">
+        <div class="logo-icon">
+            🌱
+        </div>
+
+        <h1>Flora</h1>
+        <p class="tagline">GESTÃO BOTÂNICA</p>
+    </div>
+
+    <div class="form-card">
+
+        <h2>Bem-vindo de volta</h2>
+
+        <p class="subtitle">
+            Gere as tuas plantas de forma simples e eficiente.
+        </p>
+
+        <form id="login-form">
+        <label for="email">E-mail</label>
+
+        <input
+            id="email"
+            type="email"
+            placeholder="ola@o-teu-jardim.pt"
+        >
+
+        <div class="password-header">
+            <label for="password">Palavra-passe</label>
+
+            <span>Esqueceu a senha?</span>
+        </div>
+
+        <input
+            id="password"
+            type="password"
+            placeholder="••••••••"
+        >
+
+        <div class="remember-box">
+            <input
+                type="checkbox"
+                id="remember"
+                checked
+            >
+
+            <label for="remember">
+                Lembrar-se deste dispositivo
+            </label>
+        </div>
+
+        <button class="login-btn" type="submit">
+            Iniciar Sessão →
+        </button>
+        </form>
+        <p id="login-message" role="status" aria-live="polite"></p>
+
+        <div class="divider">
+            <span>OU ACEDER COM</span>
+        </div>
+
+        <div class="social-buttons">
+
+            <button class="social-btn">
+                Google
+            </button>
+
+            <button class="social-btn">
+                Apple
+            </button>
+
+        </div>
+
+    </div>
+
+    <div class="register-box">
+        Não tens conta?
+
+        <a href="register.html">
+            Cria uma conta gratuita
+        </a>
+    </div>
+
+    <div class="tip-card">
+        🌿 Lembrete verde: regar pela manhã favorece uma melhor absorção da água.
+    </div>
+
+</main>
+<script>lucide.createIcons();</script>
+<script type="module" src="../assets/js/app.js"></script>
+</body>
+</html>
