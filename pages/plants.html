@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>As Minhas Plantas - Flora</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script type="module" src="../assets/js/app.js"></script>
+  <link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body class="bg-[#f2f7f4] min-h-screen flex justify-center items-center p-2">
+
+  <div class="phone-frame w-full max-w-[390px] h-[820px] shadow-2xl flex flex-col overflow-hidden relative justify-between">
+    
+    <!-- Top Bar -->
+    <header class="px-5 pt-4 pb-3 flex items-center justify-between glass-header sticky top-0 z-20">
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 rounded-xl bg-[#1b4332] text-white flex items-center justify-center shadow-md">
+          <i data-lucide="sprout" class="w-4 h-4"></i>
+        </div>
+        <span class="text-base font-extrabold text-[#1b4332] tracking-tight">Flora</span>
+      </div>
+
+      <button type="button" onclick="window.location.href='addPlant.html'" class="w-8 h-8 rounded-xl bg-[#1b4332] text-white flex items-center justify-center shadow-sm">
+        <i data-lucide="plus" class="w-4 h-4"></i>
+      </button>
+    </header>
+
+    <!-- Conteúdo Scrollável -->
+    <div class="px-5 py-3 space-y-4 overflow-y-auto flex-1 no-scrollbar pb-24">
+
+      <div>
+        <h2 class="text-xl font-bold text-slate-900">As Minhas Plantas</h2>
+        <p class="text-xs text-slate-500 mt-0.5">Coleção e estado das tuas espécies de interior.</p>
+      </div>
+
+      <!-- Barra de Pesquisa -->
+      <div class="relative">
+        <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3.5 top-3"></i>
+        <input id="plant-search" type="search" placeholder="Pesquisar por nome ou espécie..." aria-label="Pesquisar plantas por nome ou espécie" class="w-full bg-white/90 rounded-2xl pl-10 pr-4 py-2.5 text-xs text-slate-700 placeholder-slate-400 border border-emerald-900/10 focus:outline-none focus:ring-2 focus:ring-[#1b4332]">
+      </div>
+
+      <!-- Lista de Plantas Normais -->
+      <div id="plant-grid" class="grid grid-cols-2 gap-3">
+        <!-- Planta 1 -->
+        <div data-plant-name class="glass-card rounded-2xl overflow-hidden soft-shadow cursor-pointer group" onclick="window.location.href='plant.html'">
+          <div class="relative h-32">
+            <img src="https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=600&q=85" alt="Costela-de-Adão" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+            <span class="absolute top-2 left-2 bg-white/90 backdrop-blur text-[#1b4332] text-[9px] font-extrabold px-2 py-0.5 rounded-full flex items-center gap-1 shadow-sm">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Saudável
+            </span>
+          </div>
+          <div class="p-3">
+            <h4 class="text-xs font-bold text-slate-800 truncate">Costela-de-Adão</h4>
+            <p class="text-[10px] text-slate-400 italic">Monstera Deliciosa</p>
+          </div>
+        </div>
+
+        <!-- Planta 2 -->
+        <div data-plant-name class="glass-card rounded-2xl overflow-hidden soft-shadow cursor-pointer group" onclick="window.location.href='plant.html'">
+          <div class="relative h-32">
+            <img src="https://images.unsplash.com/photo-1485955900006-10f4d324d411?auto=format&fit=crop&w=600&q=85" alt="Figueira-lira" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+            <span class="absolute top-2 left-2 bg-white/90 backdrop-blur text-[#1b4332] text-[9px] font-extrabold px-2 py-0.5 rounded-full flex items-center gap-1 shadow-sm">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Saudável
+            </span>
+          </div>
+          <div class="p-3">
+            <h4 class="text-xs font-bold text-slate-800 truncate">Figueira-lira</h4>
+            <p class="text-[10px] text-slate-400 italic">Ficus Lyrata</p>
+          </div>
+        </div>
+
+        <!-- Planta 3 -->
+        <div data-plant-name class="glass-card rounded-2xl overflow-hidden soft-shadow cursor-pointer group" onclick="window.location.href='plant.html'">
+          <div class="relative h-32">
+            <img src="https://images.unsplash.com/photo-1497250681960-ef046c08a56e?auto=format&fit=crop&w=600&q=85" alt="Lírio-da-paz" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+            <span class="absolute top-2 left-2 bg-white/90 backdrop-blur text-blue-700 text-[9px] font-extrabold px-2 py-0.5 rounded-full flex items-center gap-1 shadow-sm">
+              <span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span> Precisa de rega hoje
+            </span>
+          </div>
+          <div class="p-3">
+            <h4 class="text-xs font-bold text-slate-800 truncate">Lírio-da-Paz</h4>
+            <p class="text-[10px] text-slate-400 italic">Spathiphyllum</p>
+          </div>
+        </div>
+
+        <!-- Planta 4 -->
+        <div data-plant-name class="glass-card rounded-2xl overflow-hidden soft-shadow cursor-pointer group" onclick="window.location.href='plant.html'">
+          <div class="relative h-32">
+            <img src="https://images.unsplash.com/photo-1545241047-6083a3684587?auto=format&fit=crop&w=600&q=85" alt="Jiboia-dourada" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+            <span class="absolute top-2 left-2 bg-white/90 backdrop-blur text-[#1b4332] text-[9px] font-extrabold px-2 py-0.5 rounded-full flex items-center gap-1 shadow-sm">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Saudável
+            </span>
+          </div>
+          <div class="p-3">
+            <h4 class="text-xs font-bold text-slate-800 truncate">Jiboia-dourada</h4>
+            <p class="text-[10px] text-slate-400 italic">Epipremnum aureum</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Navegação Inferior -->
+    <nav class="bg-white/90 backdrop-blur-md border-t border-emerald-900/10 px-4 py-2.5 flex justify-around items-center sticky bottom-0 z-20">
+      <button type="button" onclick="window.location.href='../index.html'" class="flex flex-col items-center gap-0.5 text-slate-400 hover:text-[#1b4332]">
+        <i data-lucide="home" class="w-5 h-5"></i>
+        <span class="text-[9px] font-medium">Início</span>
+      </button>
+
+      <button type="button" class="flex flex-col items-center gap-0.5 text-[#1b4332] font-bold">
+        <i data-lucide="sprout" class="w-5 h-5"></i>
+        <span class="text-[9px]">Plantas</span>
+      </button>
+
+      <button type="button" onclick="window.location.href='addPlant.html'" class="w-11 h-11 bg-[#1b4332] text-white rounded-2xl flex items-center justify-center shadow-lg shadow-[#1b4332]/30 -mt-5 hover:bg-[#2d6a4f] transition">
+        <i data-lucide="plus" class="w-6 h-6"></i>
+      </button>
+
+      <button type="button" onclick="window.location.href='tasks.html'" class="flex flex-col items-center gap-0.5 text-slate-400 hover:text-[#1b4332]">
+        <i data-lucide="check-square" class="w-5 h-5"></i>
+        <span class="text-[9px] font-medium">Tarefas</span>
+      </button>
+
+      <button type="button" onclick="window.location.href='profile.html'" class="flex flex-col items-center gap-0.5 text-slate-400 hover:text-[#1b4332]">
+        <i data-lucide="user" class="w-5 h-5"></i>
+        <span class="text-[9px] font-medium">Perfil</span>
+      </button>
+    </nav>
+
+  </div>
+
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>
