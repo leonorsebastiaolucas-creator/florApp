@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Criar Conta - Flora</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script type="module" src="../assets/js/app.js"></script>
+  <link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body class="bg-[#f2f7f4] min-h-screen flex justify-center items-center p-2">
+
+  <div class="phone-frame w-full max-w-[390px] h-[820px] shadow-2xl flex flex-col overflow-hidden relative justify-between">
+    
+    <div class="px-6 py-8 flex-1 flex flex-col justify-center space-y-5">
+      
+      <div class="text-center space-y-1.5">
+        <div class="w-12 h-12 bg-[#1b4332] text-white rounded-2xl flex items-center justify-center mx-auto shadow-md">
+          <i data-lucide="user-plus" class="w-6 h-6"></i>
+        </div>
+        <h1 class="text-xl font-bold text-slate-900">Criar Conta</h1>
+        <p class="text-xs text-slate-500">Junta-te à comunidade Flora</p>
+      </div>
+
+      <form id="register-form" class="glass-card p-4 rounded-3xl soft-shadow space-y-3">
+        <div>
+          <label class="block text-[10px] font-bold text-slate-700 mb-1">Nome completo</label>
+          <input type="text" name="name" placeholder="Maria Santos" required class="w-full bg-slate-50 rounded-xl px-3 py-2 text-xs border border-slate-200">
+        </div>
+
+        <div>
+          <label class="block text-[10px] font-bold text-slate-700 mb-1">Correio Eletrónico</label>
+          <input type="email" name="email" placeholder="maria@exemplo.pt" required class="w-full bg-slate-50 rounded-xl px-3 py-2 text-xs border border-slate-200">
+        </div>
+
+        <div>
+          <label class="block text-[10px] font-bold text-slate-700 mb-1">Palavra-passe</label>
+          <input type="password" name="password" placeholder="••••••••" required class="w-full bg-slate-50 rounded-xl px-3 py-2 text-xs border border-slate-200">
+        </div>
+
+        <div>
+          <label for="profile-photo" class="block text-[10px] font-bold text-slate-700 mb-1">Fotografia de perfil (opcional)</label>
+          <input id="profile-photo" type="file" name="photo" accept="image/*" class="w-full bg-slate-50 rounded-xl px-3 py-2 text-xs border border-slate-200">
+        </div>
+
+        <p id="register-message" role="status" class="text-[10px] text-red-700"></p>
+        <button type="submit" class="w-full bg-[#1b4332] text-white font-bold py-2.5 rounded-xl text-xs shadow-md mt-2">
+          Criar Conta
+        </button>
+      </form>
+
+      <p class="text-center text-xs text-slate-500">
+        Já tens conta? <a href="login.html" class="font-bold text-[#1b4332] underline">Entrar</a>
+      </p>
+
+    </div>
+
+    <div id="screen-switcher" class="fixed top-3 right-3 z-50">
+      <button type="button" onclick="toggleScreenMenu()" class="bg-[#1b4332] text-white p-2 rounded-xl shadow-lg flex items-center justify-center">
+        <i data-lucide="layers" class="w-4 h-4"></i>
+      </button>
+      <div id="screen-menu" class="hidden absolute right-0 mt-2 w-44 bg-white rounded-2xl shadow-xl p-2 space-y-1 text-[11px] font-medium border border-slate-100">
+        <a href="../index.html" class="block px-2 py-1 rounded hover:bg-emerald-50">Início</a>
+        <a href="login.html" class="block px-2 py-1 rounded hover:bg-emerald-50">Iniciar sessão</a>
+        <a href="register.html" class="block px-2 py-1 rounded hover:bg-emerald-50 font-bold text-[#1b4332]">Criar Conta</a>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    lucide.createIcons();
+    function toggleScreenMenu() { document.getElementById('screen-menu').classList.toggle('hidden'); }
+  </script>
+</body>
+</html>
