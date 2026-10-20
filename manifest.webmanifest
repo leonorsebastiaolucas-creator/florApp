@@ -1,0 +1,18 @@
+{
+  "name": "Flora",
+  "short_name": "Flora",
+  "description": "Acompanha e cuida das tuas plantas.",
+  "start_url": "./floraapp.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f8f1e9",
+  "theme_color": "#244b3b",
+  "icons": [
+    {
+      "src": "./assets/images/logo.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
