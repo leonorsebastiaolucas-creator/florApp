@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Costela-de-Adão - Flora</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script type="module" src="../assets/js/app.js"></script>
+  <link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body class="bg-[#f2f7f4] min-h-screen flex justify-center items-center p-2">
+
+  <div class="phone-frame w-full max-w-[390px] h-[820px] shadow-2xl flex flex-col overflow-hidden relative justify-between">
+    
+    <header class="px-5 pt-4 pb-3 flex items-center justify-between glass-header sticky top-0 z-20">
+      <button type="button" onclick="window.location.href='plants.html'" class="w-8 h-8 rounded-xl bg-white/80 text-slate-700 flex items-center justify-center shadow-sm">
+        <i data-lucide="arrow-left" class="w-4 h-4"></i>
+      </button>
+      <span class="text-sm font-bold text-slate-900">Detalhes</span>
+      <button type="button" onclick="window.location.href='editPlant.html'" class="w-8 h-8 rounded-xl bg-white/80 text-slate-700 flex items-center justify-center shadow-sm">
+        <i data-lucide="pencil" class="w-4 h-4"></i>
+      </button>
+    </header>
+
+    <div class="px-5 py-3 space-y-4 overflow-y-auto flex-1 no-scrollbar pb-24">
+      
+      <!-- Imagem Principal -->
+      <div class="relative h-52 rounded-3xl overflow-hidden soft-shadow">
+        <img src="https://images.unsplash.com/photo-1614594975525-e45190c55d0b?auto=format&fit=crop&w=600&q=80" alt="Costela-de-Adão" class="w-full h-full object-cover">
+        <span class="absolute top-3 left-3 bg-white/95 backdrop-blur text-[#1b4332] text-[10px] font-extrabold px-3 py-1 rounded-full shadow">
+          • Regar em 2 dias
+        </span>
+      </div>
+
+      <div>
+        <h2 class="text-xl font-bold text-slate-900">Costela-de-Adão</h2>
+        <p class="text-xs text-slate-500 italic">Monstera Deliciosa</p>
+      </div>
+
+      <!-- Guia de Cuidados -->
+      <div class="grid grid-cols-2 gap-2.5">
+        <div class="glass-card p-3 rounded-2xl soft-shadow flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center">
+            <i data-lucide="droplet" class="w-4 h-4"></i>
+          </div>
+          <div>
+            <p class="text-[10px] text-slate-400 font-medium">Frequência de rega</p>
+            <p class="text-xs font-bold text-slate-800">Cada 7 dias</p>
+          </div>
+        </div>
+
+        <div class="glass-card p-3 rounded-2xl soft-shadow flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center">
+            <i data-lucide="sun" class="w-4 h-4"></i>
+          </div>
+          <div>
+            <p class="text-[10px] text-slate-400 font-medium">Luz Solar</p>
+            <p class="text-xs font-bold text-slate-800">Indireta</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Histórico -->
+      <div class="space-y-2">
+        <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wide">Registo Recente</h3>
+        <div class="glass-card rounded-2xl p-3 soft-shadow space-y-2">
+          <div class="flex items-center justify-between text-xs">
+            <span class="font-bold text-slate-700 flex items-center gap-1.5"><i data-lucide="check-circle" class="w-3.5 h-3.5 text-[#2d6a4f]"></i> Rega de 200 ml</span>
+            <span class="text-[10px] text-slate-400">Há 5 dias</span>
+          </div>
+          <div class="flex items-center justify-between text-xs border-t border-slate-100 pt-2">
+            <span class="font-bold text-slate-700 flex items-center gap-1.5"><i data-lucide="sparkles" class="w-3.5 h-3.5 text-amber-500"></i> Fertilização</span>
+            <span class="text-[10px] text-slate-400">Há 14 dias</span>
+          </div>
+        </div>
+      </div>
+
+      <button type="button" class="w-full bg-[#1b4332] text-white font-bold py-3 rounded-2xl shadow-lg flex items-center justify-center gap-2">
+        <i data-lucide="droplet" class="w-4 h-4"></i> Regar Agora
+      </button>
+
+    </div>
+
+    <div id="screen-switcher" class="fixed top-3 right-3 z-50">
+      <button type="button" onclick="toggleScreenMenu()" class="bg-[#1b4332] text-white p-2 rounded-xl shadow-lg flex items-center justify-center">
+        <i data-lucide="layers" class="w-4 h-4"></i>
+      </button>
+      <div id="screen-menu" class="hidden absolute right-0 mt-2 w-44 bg-white rounded-2xl shadow-xl p-2 space-y-1 text-[11px] font-medium border border-slate-100">
+        <a href="../index.html" class="block px-2 py-1 rounded hover:bg-emerald-50">Início</a>
+        <a href="plants.html" class="block px-2 py-1 rounded hover:bg-emerald-50">Catálogo</a>
+        <a href="plant.html" class="block px-2 py-1 rounded hover:bg-emerald-50 font-bold text-[#1b4332]">Detalhes</a>
+        <a href="editPlant.html" class="block px-2 py-1 rounded hover:bg-emerald-50">Editar Planta</a>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    lucide.createIcons();
+    function toggleScreenMenu() { document.getElementById('screen-menu').classList.toggle('hidden'); }
+  </script>
+</body>
+</html>
