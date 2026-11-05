@@ -388,6 +388,107 @@ export function initializeUI() {
   logoutButton?.addEventListener("click", endSession);
 }
 
+const catalogPlantPreviewList = [
+  {
+    catalogId: "limoeiro",
+    name: "Limoeiro",
+    species: "Citrus limon",
+    description: "Uma árvore cítrica mediterrânica muito aromática, ideal para luz direta e para quem gosta de ter um toque de frescura na casa ou varanda.",
+    wateringDays: 7,
+    light: "Sol direto",
+    care: "Precisa de bastante luz e de um vaso com boa drenagem. Mantém o solo levemente húmido, sem encharcar.",
+    photo: "https://i.pinimg.com/originals/6d/04/f7/6d04f724c9864acedd241e44835b1838.jpg",
+  },
+  {
+    catalogId: "alfazema",
+    name: "Alfazema",
+    species: "Lavandula angustifolia",
+    description: "A alfazema é conhecida pelo seu aroma intenso e pelas flores suaves, sendo uma escolha muito elegante para zonas ensolaradas.",
+    wateringDays: 7,
+    light: "Sol direto",
+    care: "Gosta de sol direto e de solo bem drenado; evita encharcar a terra e aumenta a sua perfumaria em locais iluminados.",
+    photo: "https://i.pinimg.com/originals/59/bd/fa/59bdfa3d93b5ef0831907378cf1fe4a1.jpg",
+  },
+  {
+    catalogId: "hortela",
+    name: "Hortelã",
+    species: "Mentha spicata",
+    description: "A hortelã cresce rápido e dá um aroma muito fresco. É perfeita para cozinhas e janelas bem iluminadas, mas exige rega regular.",
+    wateringDays: 3,
+    light: "Luz indireta",
+    care: "Mantém a terra ligeiramente húmida e poda regularmente para estimular o crescimento. Gosta de um ambiente luminoso.",
+    photo: "https://i.pinimg.com/originals/63/60/68/6360684ee640d6b90998765d10058806.jpg",
+  },
+];
+
+function readCatalogPlantPreview(plantId) {
+  if (!plantId || !plantId.startsWith("catalog:")) {
+    return null;
+  }
+
+  const catalogId = plantId.replace(/^catalog:/, "");
+  return catalogPlantPreviewList.find((plant) => plant.catalogId === catalogId) || null;
+}
+
+function resolvePlantDetail(plantId) {
+  const savedPlants = readStoredPlants();
+  const exactMatch = savedPlants.find((storedPlant) => storedPlant.id === plantId);
+  const catalogPreview = readCatalogPlantPreview(plantId);
+
+  if (exactMatch) {
+    const enrichedMatch = catalogPreview
+      ? {
+          ...catalogPreview,
+          ...exactMatch,
+          photo: exactMatch.photo || catalogPreview.photo,
+          description: exactMatch.description || catalogPreview.description,
+          care: exactMatch.care || catalogPreview.care,
+          light: exactMatch.light || catalogPreview.light,
+          species: exactMatch.species || catalogPreview.species,
+          wateringDays: exactMatch.wateringDays || catalogPreview.wateringDays,
+        }
+      : exactMatch;
+    return { ...enrichedMatch, isSaved: true };
+  }
+
+  if (catalogPreview) {
+    const savedCatalogMatch = savedPlants.find((storedPlant) => storedPlant.catalogId === catalogPreview.catalogId);
+    if (savedCatalogMatch) {
+      return {
+        ...catalogPreview,
+        ...savedCatalogMatch,
+        photo: savedCatalogMatch.photo || catalogPreview.photo,
+        description: savedCatalogMatch.description || catalogPreview.description,
+        care: savedCatalogMatch.care || catalogPreview.care,
+        light: savedCatalogMatch.light || catalogPreview.light,
+        species: savedCatalogMatch.species || catalogPreview.species,
+        wateringDays: savedCatalogMatch.wateringDays || catalogPreview.wateringDays,
+        isSaved: true,
+      };
+    }
+
+    return { ...catalogPreview, id: plantId, catalogId: catalogPreview.catalogId, isSaved: false };
+  }
+
+  const catalogIdMatch = savedPlants.find((storedPlant) => storedPlant.catalogId === plantId);
+  if (catalogIdMatch) {
+    const fallbackPreview = readCatalogPlantPreview(`catalog:${catalogIdMatch.catalogId}`);
+    return {
+      ...fallbackPreview,
+      ...catalogIdMatch,
+      photo: catalogIdMatch.photo || fallbackPreview?.photo,
+      description: catalogIdMatch.description || fallbackPreview?.description,
+      care: catalogIdMatch.care || fallbackPreview?.care,
+      light: catalogIdMatch.light || fallbackPreview?.light,
+      species: catalogIdMatch.species || fallbackPreview?.species,
+      wateringDays: catalogIdMatch.wateringDays || fallbackPreview?.wateringDays,
+      isSaved: true,
+    };
+  }
+
+  return null;
+}
+
 function renderPlantDetails() {
   const details = document.querySelector("[data-plant-details]");
   if (!details) {
@@ -395,7 +496,7 @@ function renderPlantDetails() {
   }
 
   const plantId = new URLSearchParams(window.location.search).get("id");
-  const plant = readStoredPlants().find((storedPlant) => storedPlant.id === plantId);
+  const plant = resolvePlantDetail(plantId);
   const emptyState = document.querySelector("[data-plant-not-found]");
   if (!plant) {
     emptyState.hidden = false;
@@ -412,6 +513,7 @@ function renderPlantDetails() {
   details.querySelector("[data-plant-species]").textContent = plant.species || "Espécie não indicada";
   details.querySelector("[data-plant-watering-frequency]").textContent = wateringFrequency(plant.wateringDays);
   details.querySelector("[data-plant-light]").textContent = plant.light || "Não indicada";
+  details.querySelector("[data-plant-description]").textContent = plant.description || "Esta planta ainda não tem uma descrição disponível.";
   const careContainer = details.querySelector("[data-plant-care-container]");
   careContainer.hidden = !plant.care;
   details.querySelector("[data-plant-care]").textContent = plant.care || "";
@@ -433,10 +535,28 @@ function renderPlantDetails() {
     wateringStatus.textContent = message;
     nextWatering.textContent = message;
   };
-  updateWateringDetails(plant.lastWateredAt);
 
   const waterButton = details.querySelector("[data-water-plant]");
   const waterMessage = details.querySelector("[data-water-message]");
+  if (!plant.isSaved) {
+    waterButton.disabled = true;
+    waterButton.setAttribute("aria-disabled", "true");
+    waterButton.classList.add("opacity-60", "cursor-not-allowed");
+    waterButton.innerHTML = '<i data-lucide="bookmark-plus" class="w-4 h-4"></i> Guardar para regar';
+    if (window.lucide) {
+      window.lucide.createIcons();
+    }
+    waterMessage.textContent = "Guarda esta planta na tua coleção para poderes acompanhar a rega e os cuidados.";
+    return;
+  }
+
+  updateWateringDetails(plant.lastWateredAt);
+  waterButton.disabled = false;
+  waterButton.classList.remove("opacity-60", "cursor-not-allowed");
+  waterButton.innerHTML = '<i data-lucide="droplet" class="w-4 h-4"></i> Regar Agora';
+  if (window.lucide) {
+    window.lucide.createIcons();
+  }
   waterButton.addEventListener("click", () => {
     try {
       const lastWateredAt = Date.now();

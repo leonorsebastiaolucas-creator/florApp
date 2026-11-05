@@ -14,7 +14,7 @@
   <div class="phone-frame w-full max-w-[390px] h-[820px] shadow-2xl flex flex-col overflow-hidden relative justify-between">
     
     <header class="px-5 pt-4 pb-3 flex items-center justify-between glass-header sticky top-0 z-20">
-      <button type="button" onclick="window.location.href='plants.html'" class="w-8 h-8 rounded-xl bg-white/80 text-slate-700 flex items-center justify-center shadow-sm">
+      <button data-plant-back type="button" onclick="window.location.href='plants.html'" class="w-8 h-8 rounded-xl bg-white/80 text-slate-700 flex items-center justify-center shadow-sm">
         <i data-lucide="arrow-left" class="w-4 h-4"></i>
       </button>
       <span class="text-sm font-bold text-slate-900">Detalhes</span>
@@ -23,9 +23,9 @@
 
     <div class="px-5 py-3 space-y-4 overflow-y-auto flex-1 no-scrollbar pb-24">
       <div data-plant-details hidden class="space-y-4">
-        <div class="relative h-52 rounded-3xl overflow-hidden soft-shadow">
-          <img data-plant-photo src="" alt="" class="w-full h-full object-cover">
-          <span data-plant-watering-status class="absolute top-3 left-3 bg-white/95 backdrop-blur text-[#1b4332] text-[10px] font-extrabold px-3 py-1 rounded-full shadow"></span>
+        <div class="relative h-52 rounded-3xl overflow-hidden soft-shadow plant-detail-photo-frame">
+          <img data-plant-photo src="" alt="" class="w-full h-full object-cover object-center plant-detail-photo">
+          <span data-plant-watering-status hidden class="absolute top-3 left-3 bg-white/95 backdrop-blur text-[#1b4332] text-[10px] font-extrabold px-3 py-1 rounded-full shadow"></span>
         </div>
 
         <div>
@@ -60,12 +60,17 @@
           <p data-plant-next-watering class="text-xs font-bold text-slate-800"></p>
         </div>
 
+        <div data-plant-description-container class="glass-card rounded-2xl p-3 soft-shadow">
+          <p class="text-[10px] text-slate-400 font-medium">Sobre esta planta</p>
+          <p data-plant-description class="mt-1 whitespace-pre-line text-xs text-slate-700"></p>
+        </div>
+
         <div data-plant-care-container hidden class="glass-card rounded-2xl p-3 soft-shadow">
           <p class="text-[10px] text-slate-400 font-medium">Outros cuidados</p>
           <p data-plant-care class="whitespace-pre-line text-xs text-slate-700"></p>
         </div>
 
-        <div>
+        <div data-water-controls>
           <button data-water-plant type="button" class="w-full bg-[#1b4332] text-white font-bold py-3 rounded-2xl shadow-lg flex items-center justify-center gap-2">
             <i data-lucide="droplet" class="w-4 h-4"></i> Regar Agora
           </button>
@@ -75,7 +80,7 @@
 
       <div data-plant-not-found hidden class="glass-card rounded-2xl p-5 text-center space-y-3">
         <p class="text-sm font-bold text-slate-800">Planta não encontrada</p>
-        <p class="text-xs text-slate-500">Escolhe uma planta da tua coleção para veres os detalhes.</p>
+        <p class="text-xs text-slate-500">Escolhe uma planta do catálogo ou da tua coleção para veres os detalhes.</p>
         <a href="plants.html" class="inline-flex rounded-xl bg-[#1b4332] px-4 py-2 text-xs font-bold text-white">As Minhas Plantas</a>
       </div>
 
