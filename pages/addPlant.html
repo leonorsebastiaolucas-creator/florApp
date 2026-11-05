@@ -23,28 +23,30 @@
 
     <div class="px-5 py-3 space-y-4 overflow-y-auto flex-1 no-scrollbar pb-24">
       
-      <!-- Carregamento de fotografia -->
-      <div class="glass-card rounded-3xl p-6 text-center space-y-2 border-2 border-dashed border-emerald-900/20 soft-shadow">
-        <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-[#1b4332] flex items-center justify-center mx-auto">
-          <i data-lucide="camera" class="w-6 h-6"></i>
-        </div>
-        <p class="text-xs font-bold text-slate-800">Adicionar fotografia</p>
-        <p class="text-[10px] text-slate-400">Tira uma fotografia ou escolhe uma imagem da galeria</p>
-      </div>
+      <button id="open-plant-photo" type="button" aria-controls="plant-photo" class="glass-card w-full rounded-3xl p-6 text-center space-y-2 border-2 border-dashed border-emerald-900/20 soft-shadow hover:border-[#1b4332] focus:outline-none focus:ring-2 focus:ring-[#1b4332]">
+        <img data-photo-preview hidden alt="Pré-visualização da fotografia escolhida" class="mx-auto h-32 w-full rounded-2xl object-cover">
+        <span data-photo-placeholder class="block">
+          <span class="w-12 h-12 rounded-2xl bg-emerald-50 text-[#1b4332] flex items-center justify-center mx-auto">
+            <i data-lucide="camera" class="w-6 h-6"></i>
+          </span>
+          <span data-photo-title class="mt-2 block text-xs font-bold text-slate-800">Adicionar fotografia</span>
+          <span data-photo-hint class="mt-1 block text-[10px] text-slate-400">Tira uma fotografia ou escolhe uma imagem da galeria</span>
+        </span>
+      </button>
 
       <form id="plant-form" class="space-y-3">
         <div>
           <label class="block text-[11px] font-bold text-slate-700 mb-1 flex items-center gap-1.5">
             <i data-lucide="tag" class="w-3.5 h-3.5 text-[#2d6a4f]"></i> Nome da planta
           </label>
-          <input type="text" name="name" required maxlength="60" placeholder="Ex.: Costela-de-Adão da sala" class="w-full bg-white rounded-2xl px-3.5 py-2.5 text-xs text-slate-700 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#1b4332]">
+          <input type="text" name="name" required maxlength="60" placeholder="Ex.: Limoeiro da varanda" class="w-full bg-white rounded-2xl px-3.5 py-2.5 text-xs text-slate-700 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#1b4332]">
         </div>
 
         <div>
           <label class="block text-[11px] font-bold text-slate-700 mb-1 flex items-center gap-1.5">
             <i data-lucide="sprout" class="w-3.5 h-3.5 text-[#2d6a4f]"></i> Espécie científica
           </label>
-          <input type="text" name="species" maxlength="60" placeholder="Ex.: Monstera deliciosa" class="w-full bg-white rounded-2xl px-3.5 py-2.5 text-xs text-slate-700 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#1b4332]">
+          <input type="text" name="species" maxlength="60" placeholder="Ex.: Citrus limon" class="w-full bg-white rounded-2xl px-3.5 py-2.5 text-xs text-slate-700 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#1b4332]">
         </div>
 
         <div class="grid grid-cols-2 gap-2">

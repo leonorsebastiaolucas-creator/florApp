@@ -1,4 +1,4 @@
-const CACHE_NAME = "flora-v14";
+const CACHE_NAME = "flora-v18";
 const PLANT_IMAGES = [
   "https://i.pinimg.com/originals/6d/04/f7/6d04f724c9864acedd241e44835b1838.jpg",
   "https://i.pinimg.com/originals/59/bd/fa/59bdfa3d93b5ef0831907378cf1fe4a1.jpg",
@@ -8,6 +8,7 @@ const APP_SHELL = [
   "./",
   "./index.html",
   "./floraapp.html",
+  "./manifest.webmanifest",
   "./pages/addPlant.html",
   "./pages/editPlant.html",
   "./pages/login.html",

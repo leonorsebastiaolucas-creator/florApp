@@ -1,4 +1,20 @@
 export function initializeUI() {
+  const isInPages = window.location.pathname.includes("/pages/");
+  const pageName = window.location.pathname.split("/").pop().toLowerCase();
+  const isAuthPage = pageName === "login.html" || pageName === "register.html";
+  const account = readStoredAccount();
+  const session = readStoredSession();
+  const isAuthenticated = Boolean(account && session?.email === account.email);
+
+  if (isAuthPage && isAuthenticated) {
+    window.location.replace(isInPages ? "../index.html" : "index.html");
+    return;
+  }
+  if (!isAuthPage && !isAuthenticated) {
+    window.location.replace(isInPages ? "login.html" : "pages/login.html");
+    return;
+  }
+
   if (window.lucide) {
     window.lucide.createIcons();
   }
@@ -13,7 +29,6 @@ export function initializeUI() {
     <nav class="flora-screen-menu" id="flora-screen-menu" aria-label="Navegação entre ecrãs" hidden></nav>
   `;
 
-  const isInPages = window.location.pathname.includes("/pages/");
   const pagePrefix = isInPages ? "" : "pages/";
   const homePath = isInPages ? "../index.html" : "index.html";
   const screens = [
@@ -168,24 +183,50 @@ export function initializeUI() {
   const plantForm = document.querySelector("#plant-form");
   const plantMessage = document.querySelector("#plant-message");
   if (plantForm && plantMessage) {
+    const photoInput = plantForm.elements.photo;
+    const photoButton = document.querySelector("#open-plant-photo");
+    const photoPreview = document.querySelector("[data-photo-preview]");
+    const photoTitle = document.querySelector("[data-photo-title]");
+    const photoHint = document.querySelector("[data-photo-hint]");
+    let previewUrl = "";
+
+    photoButton?.addEventListener("click", () => photoInput.click());
+    photoInput.addEventListener("change", () => {
+      const photoFile = photoInput.files[0];
+      plantMessage.textContent = "";
+      if (!photoFile) {
+        return;
+      }
+      if (!photoFile.type.startsWith("image/")) {
+        plantMessage.textContent = "Seleciona um ficheiro de imagem válido.";
+        photoInput.value = "";
+        return;
+      }
+
+      if (previewUrl) {
+        URL.revokeObjectURL(previewUrl);
+      }
+      previewUrl = URL.createObjectURL(photoFile);
+      photoPreview.src = previewUrl;
+      photoPreview.hidden = false;
+      photoTitle.textContent = photoFile.name;
+      photoHint.textContent = "Fotografia selecionada. Toca aqui para alterar.";
+    });
+
     plantForm.addEventListener("submit", async (event) => {
       event.preventDefault();
-      const photoFile = plantForm.elements.photo.files[0];
+      const photoFile = photoInput.files[0];
       let photo = "";
 
       if (photoFile && !photoFile.type.startsWith("image/")) {
         plantMessage.textContent = "Seleciona um ficheiro de imagem válido.";
         return;
       }
-      if (photoFile && photoFile.size > 1024 * 1024) {
-        plantMessage.textContent = "A fotografia deve ter no máximo 1 MB.";
-        return;
-      }
       if (photoFile) {
         try {
-          photo = await readImage(photoFile);
+          photo = await readImage(await compressPlantPhoto(photoFile));
         } catch {
-          plantMessage.textContent = "Não foi possível carregar a fotografia.";
+          plantMessage.textContent = "Não foi possível processar a fotografia. Tenta escolher outra imagem.";
           return;
         }
       }
@@ -247,8 +288,19 @@ export function initializeUI() {
 
       const name = registerForm.elements.name.value.trim();
       const email = registerForm.elements.email.value.trim();
+      const password = registerForm.elements.password.value;
       const photoFile = registerForm.elements.photo.files[0];
       let photo = "";
+
+      if (password.length < 8) {
+        registerMessage.textContent = "A palavra-passe deve ter pelo menos 8 caracteres.";
+        return;
+      }
+
+      if (readStoredAccount()) {
+        registerMessage.textContent = "Já existe uma conta neste dispositivo. Inicia sessão para continuar.";
+        return;
+      }
 
       if (photoFile && !photoFile.type.startsWith("image/")) {
         registerMessage.textContent = "Seleciona um ficheiro de imagem válido.";
@@ -275,12 +327,15 @@ export function initializeUI() {
       }
 
       try {
+        const credentials = await createPasswordCredentials(password);
         localStorage.setItem(
           "flora-profile",
           JSON.stringify({ name, email, photo })
         );
+        localStorage.setItem("flora-account", JSON.stringify({ email: email.toLowerCase(), ...credentials }));
+        localStorage.setItem("flora-session", JSON.stringify({ email: email.toLowerCase() }));
       } catch {
-        registerMessage.textContent = "Não foi possível guardar os dados do perfil.";
+        registerMessage.textContent = "Não foi possível criar a conta neste dispositivo.";
         return;
       }
 
@@ -292,26 +347,39 @@ export function initializeUI() {
   const loginMessage = document.querySelector("#login-message");
 
   if (loginForm && loginMessage) {
-    loginForm.addEventListener("submit", (event) => {
+    loginForm.addEventListener("submit", async (event) => {
       event.preventDefault();
       const email = loginForm.elements.email.value.trim().toLowerCase();
-      let profile = {};
+      const password = loginForm.elements.password.value;
+      const account = readStoredAccount();
 
-      try {
-        profile = JSON.parse(localStorage.getItem("flora-profile") || "{}");
-      } catch {
-        profile = {};
-      }
-
-      if (profile.email?.toLowerCase() !== email || !profile.name) {
+      if (!account || account.email !== email) {
         loginMessage.textContent =
           "Não encontrámos uma conta com este email neste dispositivo. Cria uma conta para continuar.";
+        return;
+      }
+
+      try {
+        const passwordMatches = await verifyPassword(password, account);
+        if (!passwordMatches) {
+          loginMessage.textContent = "A palavra-passe está incorreta.";
+          return;
+        }
+        localStorage.setItem("flora-session", JSON.stringify({ email }));
+      } catch {
+        loginMessage.textContent = "Não foi possível validar a conta neste dispositivo.";
         return;
       }
 
       window.location.href = "../index.html";
     });
   }
+
+  const logoutButton = document.querySelector("[data-logout]");
+  logoutButton?.addEventListener("click", () => {
+    localStorage.removeItem("flora-session");
+    window.location.replace("../pages/login.html");
+  });
 }
 
 function renderPlantDetails() {
@@ -392,6 +460,74 @@ function readStoredPlants() {
   } catch {
     return [];
   }
+}
+
+function readStoredAccount() {
+  try {
+    const account = JSON.parse(localStorage.getItem("flora-account") || "null");
+    return account?.email && account?.salt && account?.passwordHash ? account : null;
+  } catch {
+    return null;
+  }
+}
+
+function readStoredSession() {
+  try {
+    const session = JSON.parse(localStorage.getItem("flora-session") || "null");
+    return session?.email ? session : null;
+  } catch {
+    return null;
+  }
+}
+
+async function createPasswordCredentials(password) {
+  if (!crypto.subtle) {
+    throw new Error("A encriptação de palavras-passe não está disponível neste endereço.");
+  }
+
+  const salt = crypto.getRandomValues(new Uint8Array(16));
+  const passwordHash = await derivePasswordHash(password, salt);
+  return {
+    salt: bytesToHex(salt),
+    passwordHash,
+  };
+}
+
+async function verifyPassword(password, account) {
+  if (!crypto.subtle) {
+    throw new Error("A encriptação de palavras-passe não está disponível neste endereço.");
+  }
+
+  const salt = hexToBytes(account.salt);
+  return (await derivePasswordHash(password, salt)) === account.passwordHash;
+}
+
+async function derivePasswordHash(password, salt) {
+  const key = await crypto.subtle.importKey(
+    "raw",
+    new TextEncoder().encode(password),
+    "PBKDF2",
+    false,
+    ["deriveBits"]
+  );
+  const bits = await crypto.subtle.deriveBits(
+    { name: "PBKDF2", salt, iterations: 120000, hash: "SHA-256" },
+    key,
+    256
+  );
+  return bytesToHex(new Uint8Array(bits));
+}
+
+function bytesToHex(bytes) {
+  return [...bytes].map((byte) => byte.toString(16).padStart(2, "0")).join("");
+}
+
+function hexToBytes(hex) {
+  if (!/^(?:[0-9a-f]{2})+$/i.test(hex)) {
+    throw new Error("Os dados da conta são inválidos.");
+  }
+
+  return Uint8Array.from(hex.match(/.{2}/g), (byte) => Number.parseInt(byte, 16));
 }
 
 function initializeCatalogSaveButtons(plantGrid) {
@@ -589,4 +725,62 @@ function readImage(file) {
     reader.onerror = () => reject(reader.error);
     reader.readAsDataURL(file);
   });
+}
+
+async function compressPlantPhoto(file) {
+  let image;
+  let objectUrl = "";
+
+  if ("createImageBitmap" in window) {
+    image = await createImageBitmap(file);
+  } else {
+    objectUrl = URL.createObjectURL(file);
+    image = await new Promise((resolve, reject) => {
+      const photo = new Image();
+      photo.onload = () => resolve(photo);
+      photo.onerror = () => reject(new Error("A imagem não pode ser aberta."));
+      photo.src = objectUrl;
+    });
+  }
+
+  try {
+    const largestSide = Math.max(image.width || image.naturalWidth, image.height || image.naturalHeight);
+    const initialScale = Math.min(1, 1400 / largestSide);
+    const canvas = document.createElement("canvas");
+    const context = canvas.getContext("2d");
+    if (!context) {
+      throw new Error("Não foi possível preparar a imagem.");
+    }
+
+    for (let attempt = 0; attempt < 9; attempt += 1) {
+      const scale = initialScale * 0.8 ** Math.floor(attempt / 3);
+      canvas.width = Math.max(1, Math.round((image.width || image.naturalWidth) * scale));
+      canvas.height = Math.max(1, Math.round((image.height || image.naturalHeight) * scale));
+      context.fillStyle = "#fff";
+      context.fillRect(0, 0, canvas.width, canvas.height);
+      context.drawImage(image, 0, 0, canvas.width, canvas.height);
+
+      const quality = [0.82, 0.72, 0.62][attempt % 3];
+      const compressed = await new Promise((resolve, reject) => {
+        canvas.toBlob((blob) => {
+          if (blob) {
+            resolve(blob);
+          } else {
+            reject(new Error("Não foi possível comprimir a imagem."));
+          }
+        }, "image/jpeg", quality);
+      });
+
+      if (compressed.size <= 500 * 1024) {
+        return compressed;
+      }
+    }
+
+    throw new Error("A fotografia continua demasiado grande após compressão.");
+  } finally {
+    image.close?.();
+    if (objectUrl) {
+      URL.revokeObjectURL(objectUrl);
+    }
+  }
 }
