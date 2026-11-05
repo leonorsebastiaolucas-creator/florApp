@@ -51,6 +51,18 @@ body {
   animation: frame-enter 480ms ease-out both;
 }
 
+.phone-frame.auth-screen {
+  background:
+    linear-gradient(160deg, rgba(19, 47, 34, 0.38), rgba(25, 50, 36, 0.12) 48%, rgba(19, 47, 34, 0.42)),
+    url("https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=1200&q=85") center / cover;
+}
+
+.auth-screen .glass-card {
+  background: rgba(255, 254, 250, 0.93);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
 .glass-header {
   background: rgba(250, 251, 246, 0.88);
   backdrop-filter: blur(18px);

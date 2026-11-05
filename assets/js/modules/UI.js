@@ -40,8 +40,6 @@ export function initializeUI() {
     ["Tarefas", `${pagePrefix}tasks.html`, "list-checks"],
     ["Notas e lembretes", `${pagePrefix}notes.html`, "notebook-pen"],
     ["Perfil", `${pagePrefix}profile.html`, "user-round"],
-    ["Iniciar sessão", `${pagePrefix}login.html`, "log-in"],
-    ["Criar conta", `${pagePrefix}register.html`, "user-round-plus"],
     ["Sobre", `${pagePrefix}sobre.html`, "info"],
     ["Sem ligação", `${pagePrefix}offline.html`, "wifi-off"],
   ];
