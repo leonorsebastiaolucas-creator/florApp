@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Iniciar sessão - Flora</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script type="module" src="../assets/js/app.js"></script>
+  <link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body class="bg-[#f2f7f4] min-h-screen flex justify-center items-center p-2">
+
+  <div class="phone-frame w-full max-w-[390px] h-[820px] shadow-2xl flex flex-col overflow-hidden relative justify-between">
+    
+    <div class="px-6 py-10 flex-1 flex flex-col justify-center space-y-6">
+      
+      <div class="text-center space-y-2">
+        <div class="brand-logo w-14 h-14 bg-[#1b4332] text-white rounded-3xl flex items-center justify-center mx-auto shadow-lg shadow-[#1b4332]/30">
+          <i data-lucide="sprout" class="w-8 h-8"></i>
+        </div>
+        <h1 class="text-2xl font-black text-slate-900 tracking-tight">Flora</h1>
+        <p class="text-xs text-slate-500">Inicia sessão para gerir o teu jardim digital</p>
+      </div>
+
+      <form id="login-form" class="glass-card p-5 rounded-3xl soft-shadow space-y-3.5">
+        <div>
+          <label class="block text-[11px] font-bold text-slate-700 mb-1 flex items-center gap-1.5">
+            <i data-lucide="mail" class="w-3.5 h-3.5 text-[#2d6a4f]"></i> Correio eletrónico
+          </label>
+          <input type="email" name="email" autocomplete="email" required placeholder="maria@exemplo.pt" class="w-full bg-slate-50 rounded-2xl px-3.5 py-2.5 text-xs border border-slate-200">
+        </div>
+
+        <div>
+          <label class="block text-[11px] font-bold text-slate-700 mb-1 flex items-center gap-1.5">
+            <i data-lucide="lock" class="w-3.5 h-3.5 text-[#2d6a4f]"></i> Palavra-passe
+          </label>
+          <input type="password" name="password" autocomplete="current-password" required placeholder="••••••••" class="w-full bg-slate-50 rounded-2xl px-3.5 py-2.5 text-xs border border-slate-200">
+        </div>
+
+        <p id="login-message" role="status" aria-live="polite" class="text-xs text-red-700"></p>
+        <button type="submit" class="w-full bg-[#1b4332] text-white font-bold py-3 rounded-2xl shadow-lg mt-2">
+          Entrar
+        </button>
+      </form>
+
+      <p class="text-center text-xs text-slate-500">
+        Ainda não tens conta? <a href="register.html" class="font-bold text-[#1b4332] underline">Regista-te</a>
+      </p>
+
+    </div>
+
+    <div id="screen-switcher" class="fixed top-3 right-3 z-50">
+      <button type="button" onclick="toggleScreenMenu()" class="bg-[#1b4332] text-white p-2 rounded-xl shadow-lg flex items-center justify-center">
+        <i data-lucide="layers" class="w-4 h-4"></i>
+      </button>
+      <div id="screen-menu" class="hidden absolute right-0 mt-2 w-44 bg-white rounded-2xl shadow-xl p-2 space-y-1 text-[11px] font-medium border border-slate-100">
+        <a href="../index.html" class="block px-2 py-1 rounded hover:bg-emerald-50">Início</a>
+        <a href="login.html" class="block px-2 py-1 rounded hover:bg-emerald-50 font-bold text-[#1b4332]">Iniciar sessão</a>
+        <a href="register.html" class="block px-2 py-1 rounded hover:bg-emerald-50">Criar Conta</a>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    lucide.createIcons();
+    function toggleScreenMenu() { document.getElementById('screen-menu').classList.toggle('hidden'); }
+  </script>
+</body>
+</html>
