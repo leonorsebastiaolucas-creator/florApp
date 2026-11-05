@@ -197,6 +197,33 @@ h1, h2 {
   text-decoration: none;
 }
 
+.flora-screen-logout {
+  display: flex;
+  min-height: 40px;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: #b42318;
+  font-size: 12px;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+}
+
+.flora-screen-logout:hover {
+  background: #fef0ef;
+}
+
+.flora-screen-menu a svg,
+.flora-screen-logout svg {
+  width: 16px;
+  height: 16px;
+  flex: none;
+}
+
 .flora-screen-menu a:hover,
 .flora-screen-menu a[aria-current="page"] {
   background: #e8eee5;

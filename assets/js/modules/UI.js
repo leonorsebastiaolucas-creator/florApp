@@ -41,7 +41,6 @@ export function initializeUI() {
     ["Notas e lembretes", `${pagePrefix}notes.html`, "notebook-pen"],
     ["Perfil", `${pagePrefix}profile.html`, "user-round"],
     ["Sobre", `${pagePrefix}sobre.html`, "info"],
-    ["Sem ligação", `${pagePrefix}offline.html`, "wifi-off"],
   ];
   const screenMenu = switcher.querySelector(".flora-screen-menu");
   const currentPath = window.location.pathname.toLowerCase();
@@ -56,6 +55,12 @@ export function initializeUI() {
     }
     screenMenu.append(link);
   });
+
+  const screenLogoutButton = document.createElement("button");
+  screenLogoutButton.className = "flora-screen-logout";
+  screenLogoutButton.type = "button";
+  screenLogoutButton.innerHTML = '<i data-lucide="log-out" aria-hidden="true"></i><span>Terminar sessão</span>';
+  screenMenu.append(screenLogoutButton);
 
   oldSwitcher?.replaceWith(switcher);
   if (!oldSwitcher) {
@@ -82,6 +87,12 @@ export function initializeUI() {
       screenMenu.hidden = true;
     }
   });
+
+  const endSession = () => {
+    localStorage.removeItem("flora-session");
+    window.location.replace(`${pagePrefix}login.html`);
+  };
+  screenLogoutButton.addEventListener("click", endSession);
 
   if (window.lucide) {
     window.lucide.createIcons();
@@ -374,10 +385,7 @@ export function initializeUI() {
   }
 
   const logoutButton = document.querySelector("[data-logout]");
-  logoutButton?.addEventListener("click", () => {
-    localStorage.removeItem("flora-session");
-    window.location.replace("../pages/login.html");
-  });
+  logoutButton?.addEventListener("click", endSession);
 }
 
 function renderPlantDetails() {

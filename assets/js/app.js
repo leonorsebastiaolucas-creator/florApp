@@ -3,11 +3,20 @@ import { initializeUI } from "./modules/UI.js";
 initializeUI();
 
 if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => {
-    navigator.serviceWorker
-      .register(new URL("../../sw.js", import.meta.url))
-      .catch((error) => {
-        console.error("Não foi possível registar o Service Worker:", error);
-      });
+  window.addEventListener("load", async () => {
+    const appWorkerUrl = new URL("../../sw.js", import.meta.url).href;
+    try {
+      const registrations = await navigator.serviceWorker.getRegistrations();
+      const appRegistrations = registrations.filter((registration) =>
+        [registration.active, registration.waiting, registration.installing]
+          .some((worker) => worker?.scriptURL === appWorkerUrl)
+      );
+      await Promise.all(appRegistrations.map((registration) => registration.unregister()));
+
+      const appCaches = (await caches.keys()).filter((cacheName) => cacheName.startsWith("flora-"));
+      await Promise.all(appCaches.map((cacheName) => caches.delete(cacheName)));
+    } catch (error) {
+      console.error("Não foi possível desativar o suporte offline da Flora:", error);
+    }
   });
 }
