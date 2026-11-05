@@ -1,4 +1,4 @@
-const CACHE_NAME = "flora-v2";
+const CACHE_NAME = "flora-v4";
 const APP_SHELL = [
   "./",
   "./index.html",
