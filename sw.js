@@ -1,7 +1,8 @@
-const CACHE_NAME = "flora-pwa-v10";
+const CACHE_NAME = "flora-pwa-v11";
 const APP_SHELL = [
   "./",
   "./index.html",
+  "./floraapp.html",
   "./pages/login.html",
   "./pages/register.html",
   "./pages/plants.html",
@@ -9,9 +10,11 @@ const APP_SHELL = [
   "./pages/tasks.html",
   "./pages/profile.html",
   "./pages/sobre.html",
+  "./pages/notes.html",
   "./assets/css/styles.css",
   "./assets/js/app.js",
   "./assets/js/modules/UI.js",
+  "./manifest.webmanifest",
   "./manifest.json",
   "./pages/offline.html"
 ];

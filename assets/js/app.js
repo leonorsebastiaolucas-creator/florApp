@@ -4,8 +4,11 @@ initializeUI();
 
 if ("serviceWorker" in navigator && window.location.protocol !== "file:") {
   window.addEventListener("load", async () => {
-    const appWorkerUrl = new URL("../../sw.js", import.meta.url).href;
     try {
+      const currentPath = window.location.pathname;
+      const appRoot = new URL(currentPath.includes("/pages/") ? "../" : "./", window.location.href);
+      const appWorkerUrl = new URL("sw.js", appRoot).href;
+
       const registrations = await navigator.serviceWorker.getRegistrations();
       const appRegistrations = registrations.filter((registration) =>
         [registration.active, registration.waiting, registration.installing]
@@ -16,7 +19,7 @@ if ("serviceWorker" in navigator && window.location.protocol !== "file:") {
       const appCaches = (await caches.keys()).filter((cacheName) => cacheName.startsWith("flora-"));
       await Promise.all(appCaches.map((cacheName) => caches.delete(cacheName)));
 
-      await navigator.serviceWorker.register(appWorkerUrl, { scope: "../../" });
+      await navigator.serviceWorker.register(appWorkerUrl, { scope: appRoot.pathname });
     } catch (error) {
       console.error("Não foi possível atualizar o suporte offline da Flora:", error);
     }
