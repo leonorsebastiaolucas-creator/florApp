@@ -1,5 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
-  <title id="title">Flora</title>
-  <rect width="64" height="64" rx="18" fill="#d96b8a"/>
-  <path d="M32 49V30m0 7c-12 0-18-7-18-18 12 0 18 7 18 18Zm0-6c0-12 6-18 18-18 0 12-6 18-18 18Z" fill="none" stroke="#fff5f7" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"/>
-</svg>
