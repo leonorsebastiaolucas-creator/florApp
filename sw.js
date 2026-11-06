@@ -1,29 +1,22 @@
-const CACHE_NAME = "flora-pwa-v12";
+const CACHE_NAME = "flora-pwa-v11";
 const APP_SHELL = [
   "./",
   "./index.html",
   "./floraapp.html",
-  "./manifest.json",
-  "./manifest.webmanifest",
-  "./pages/addPlant.html",
-  "./pages/editPlant.html",
   "./pages/login.html",
-  "./pages/notes.html",
-  "./pages/plant.html",
-  "./pages/plants.html",
-  "./pages/profile.html",
   "./pages/register.html",
-  "./pages/sobre.html",
+  "./pages/plants.html",
+  "./pages/plant.html",
   "./pages/tasks.html",
+  "./pages/profile.html",
+  "./pages/sobre.html",
+  "./pages/notes.html",
   "./assets/css/styles.css",
-  "./assets/css/components/app-shell.css",
-  "./assets/images/logo.svg",
-  "./assets/images/icons/icon-192x192.png",
-  "./assets/images/icons/icon-512x512.png",
   "./assets/js/app.js",
   "./assets/js/modules/UI.js",
-  "./assets/js/modules/api.js",
-  "./assets/js/modules/notes.js",
+  "./manifest.webmanifest",
+  "./manifest.json",
+  "./pages/offline.html"
 ];
 
 self.addEventListener("install", (event) => {
@@ -39,9 +32,7 @@ self.addEventListener("activate", (event) => {
     caches.keys()
       .then((cacheNames) => Promise.all(
         cacheNames
-          .filter((cacheName) =>
-            cacheName.startsWith("flora-pwa-") && cacheName !== CACHE_NAME
-          )
+          .filter((cacheName) => cacheName.startsWith("flora-pwa-") && cacheName !== CACHE_NAME)
           .map((cacheName) => caches.delete(cacheName))
       ))
       .then(() => self.clients.claim())
@@ -49,58 +40,24 @@ self.addEventListener("activate", (event) => {
 });
 
 self.addEventListener("fetch", (event) => {
-  const request = event.request;
-  const requestUrl = new URL(request.url);
-
-  if (request.method !== "GET" || requestUrl.origin !== self.location.origin) {
+  if (event.request.method !== "GET") {
     return;
   }
 
-  if (request.mode === "navigate") {
-    event.respondWith(
-      fetch(request)
-        .then((response) => {
-          if (response.ok) {
-            const responseCopy = response.clone();
-            event.waitUntil(
-              caches.open(CACHE_NAME)
-                .then((cache) => cache.put(request, responseCopy))
-            );
-          }
-          return response;
-        })
-        .catch(async () => {
-          const cachedPage = await caches.match(request, { ignoreSearch: true });
-          if (cachedPage) {
-            return cachedPage;
-          }
-
-          const homePage = await caches.match("./index.html");
-          return homePage || new Response(
-            "A Flora está sem ligação. Tenta novamente quando recuperares a Internet.",
-            { status: 503, headers: { "Content-Type": "text/plain; charset=utf-8" } }
-          );
-        })
-    );
+  const requestUrl = new URL(event.request.url);
+  if (requestUrl.origin !== self.location.origin) {
     return;
   }
 
   event.respondWith(
-    caches.match(request).then((cachedResponse) => {
-      if (cachedResponse) {
-        return cachedResponse;
-      }
-
-      return fetch(request).then((response) => {
-        if (response.ok) {
-          const responseCopy = response.clone();
-          event.waitUntil(
-            caches.open(CACHE_NAME)
-              .then((cache) => cache.put(request, responseCopy))
-          );
-        }
-        return response;
-      });
-    })
+    caches.match(event.request)
+      .then((cachedResponse) => cachedResponse || fetch(event.request)
+        .then((networkResponse) => {
+          const responseClone = networkResponse.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(event.request, responseClone));
+          return networkResponse;
+        })
+        .catch(() => caches.match("./pages/offline.html"))
+      )
   );
 });

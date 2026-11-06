@@ -44,6 +44,31 @@
         </button>
       </form>
 
+      <button id="show-recovery-form" type="button" aria-expanded="false" aria-controls="recovery-form" class="w-full text-center text-xs font-bold text-[#1b4332] underline">
+        Esqueceste-te da palavra-passe?
+      </button>
+
+      <form id="recovery-form" hidden class="glass-card p-5 rounded-3xl soft-shadow space-y-3.5">
+        <h2 class="text-base font-bold text-slate-900">Recuperar palavra-passe</h2>
+        <p class="text-xs text-slate-500">Usa a palavra de recuperação definida ao criar a conta neste dispositivo. Não precisas de te lembrar do email.</p>
+        <div>
+          <label class="block text-[11px] font-bold text-slate-700 mb-1">Palavra/frase de recuperação</label>
+          <input type="password" name="recoveryWord" autocomplete="off" minlength="8" required class="w-full bg-slate-50 rounded-2xl px-3.5 py-2.5 text-xs border border-slate-200">
+        </div>
+        <div>
+          <label class="block text-[11px] font-bold text-slate-700 mb-1">Nova palavra-passe</label>
+          <input type="password" name="newPassword" autocomplete="new-password" minlength="8" required placeholder="Pelo menos 8 caracteres" class="w-full bg-slate-50 rounded-2xl px-3.5 py-2.5 text-xs border border-slate-200">
+        </div>
+        <div>
+          <label class="block text-[11px] font-bold text-slate-700 mb-1">Confirmar nova palavra-passe</label>
+          <input type="password" name="newPasswordConfirmation" autocomplete="new-password" minlength="8" required class="w-full bg-slate-50 rounded-2xl px-3.5 py-2.5 text-xs border border-slate-200">
+        </div>
+        <p id="recovery-message" role="status" aria-live="polite" class="text-xs text-red-700"></p>
+        <button type="submit" class="w-full bg-[#1b4332] text-white font-bold py-3 rounded-2xl shadow-lg">
+          Definir nova palavra-passe
+        </button>
+      </form>
+
       <p class="text-center text-xs text-slate-500">
         Ainda não tens conta? <a href="register.html" class="font-bold text-[#1b4332] underline">Regista-te</a>
       </p>
