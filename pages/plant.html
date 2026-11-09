@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detalhes da Planta - Flora</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script type="module" src="../assets/js/app.js"></script>
+  <link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body class="bg-[#f2f7f4] min-h-screen flex justify-center items-center p-2">
+
+  <div class="phone-frame w-full max-w-[390px] h-[820px] shadow-2xl flex flex-col overflow-hidden relative justify-between">
+    
+    <header class="px-5 pt-4 pb-3 flex items-center justify-between glass-header sticky top-0 z-20">
+      <button data-plant-back type="button" onclick="window.location.href='plants.html'" class="w-8 h-8 rounded-xl bg-white/80 text-slate-700 flex items-center justify-center shadow-sm">
+        <i data-lucide="arrow-left" class="w-4 h-4"></i>
+      </button>
+      <span class="text-sm font-bold text-slate-900">Detalhes</span>
+      <div class="w-8"></div>
+    </header>
+
+    <div class="px-5 py-3 space-y-4 overflow-y-auto flex-1 no-scrollbar pb-24">
+      <div data-plant-details hidden class="space-y-4">
+        <div class="relative h-52 rounded-3xl overflow-hidden soft-shadow plant-detail-photo-frame">
+          <img data-plant-photo src="" alt="" class="w-full h-full object-cover object-center plant-detail-photo">
+          <span data-plant-watering-status hidden class="absolute top-3 left-3 bg-white/95 backdrop-blur text-[#1b4332] text-[10px] font-extrabold px-3 py-1 rounded-full shadow"></span>
+        </div>
+
+        <div>
+          <h2 data-plant-name class="text-xl font-bold text-slate-900"></h2>
+          <p data-plant-species class="text-xs text-slate-500 italic"></p>
+        </div>
+
+        <div class="grid grid-cols-2 gap-2.5">
+          <div class="glass-card p-3 rounded-2xl soft-shadow flex items-center gap-2.5">
+            <div class="w-8 h-8 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center">
+              <i data-lucide="droplet" class="w-4 h-4"></i>
+            </div>
+            <div>
+              <p class="text-[10px] text-slate-400 font-medium">Frequência de rega</p>
+              <p data-plant-watering-frequency class="text-xs font-bold text-slate-800"></p>
+            </div>
+          </div>
+
+          <div class="glass-card p-3 rounded-2xl soft-shadow flex items-center gap-2.5">
+            <div class="w-8 h-8 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center">
+              <i data-lucide="sun" class="w-4 h-4"></i>
+            </div>
+            <div>
+              <p class="text-[10px] text-slate-400 font-medium">Luz solar</p>
+              <p data-plant-light class="text-xs font-bold text-slate-800"></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-card rounded-2xl p-3 soft-shadow">
+          <p class="text-[10px] text-slate-400 font-medium">Próxima rega</p>
+          <p data-plant-next-watering class="text-xs font-bold text-slate-800"></p>
+        </div>
+
+        <div data-plant-description-container class="glass-card rounded-2xl p-3 soft-shadow">
+          <p class="text-[10px] text-slate-400 font-medium">Sobre esta planta</p>
+          <p data-plant-description class="mt-1 whitespace-pre-line text-xs text-slate-700"></p>
+        </div>
+
+        <div data-plant-care-container hidden class="glass-card rounded-2xl p-3 soft-shadow">
+          <p class="text-[10px] text-slate-400 font-medium">Outros cuidados</p>
+          <p data-plant-care class="whitespace-pre-line text-xs text-slate-700"></p>
+        </div>
+
+        <div data-water-controls>
+          <button data-water-plant type="button" class="w-full bg-[#1b4332] text-white font-bold py-3 rounded-2xl shadow-lg flex items-center justify-center gap-2">
+            <i data-lucide="droplet" class="w-4 h-4"></i> Regar Agora
+          </button>
+          <p data-water-message role="status" aria-live="polite" class="mt-2 text-center text-xs text-emerald-800"></p>
+        </div>
+      </div>
+
+      <div data-plant-not-found hidden class="glass-card rounded-2xl p-5 text-center space-y-3">
+        <p class="text-sm font-bold text-slate-800">Planta não encontrada</p>
+        <p class="text-xs text-slate-500">Escolhe uma planta do catálogo ou da tua coleção para veres os detalhes.</p>
+        <a href="plants.html" class="inline-flex rounded-xl bg-[#1b4332] px-4 py-2 text-xs font-bold text-white">As Minhas Plantas</a>
+      </div>
+
+    </div>
+
+    <div id="screen-switcher" class="fixed top-3 right-3 z-50">
+      <button type="button" onclick="toggleScreenMenu()" class="bg-[#1b4332] text-white p-2 rounded-xl shadow-lg flex items-center justify-center">
+        <i data-lucide="layers" class="w-4 h-4"></i>
+      </button>
+      <div id="screen-menu" class="hidden absolute right-0 mt-2 w-44 bg-white rounded-2xl shadow-xl p-2 space-y-1 text-[11px] font-medium border border-slate-100">
+        <a href="../index.html" class="block px-2 py-1 rounded hover:bg-emerald-50">Catálogo</a>
+        <a href="plants.html" class="block px-2 py-1 rounded hover:bg-emerald-50">As Minhas Plantas</a>
+        <a href="plant.html" class="block px-2 py-1 rounded hover:bg-emerald-50 font-bold text-[#1b4332]">Detalhes</a>
+        <a href="editPlant.html" class="block px-2 py-1 rounded hover:bg-emerald-50">Editar Planta</a>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    lucide.createIcons();
+    function toggleScreenMenu() { document.getElementById('screen-menu').classList.toggle('hidden'); }
+  </script>
+</body>
+</html>
