@@ -1,27 +1,30 @@
-const CACHE_NAME = "flora-pwa-v20";
+const CACHE_NAME = "flora-pwa-v23";
+const APP_BASE_URL = self.registration.scope;
 const APP_SHELL = [
-  "./",
-  "./index.html",
-  "./floraapp.html",
-  "./pages/login.html",
-  "./pages/register.html",
-  "./pages/addPlant.html",
-  "./pages/editPlant.html",
-  "./pages/plants.html",
-  "./pages/plant.html",
-  "./pages/tasks.html",
-  "./pages/profile.html",
-  "./pages/sobre.html",
-  "./pages/notes.html",
-  "./assets/css/styles.css",
-  "./assets/images/logo.svg",
-  "./assets/js/app.js",
-  "./assets/js/firebase.js",
-  "./assets/js/modules/UI.js",
-  "./manifest.webmanifest",
-  "./manifest.json",
-  "./pages/offline.html"
-];
+  "",
+  "index.html",
+  "floraapp.html",
+  "pages/login.html",
+  "pages/register.html",
+  "pages/addPlant.html",
+  "pages/editPlant.html",
+  "pages/plants.html",
+  "pages/plant.html",
+  "pages/tasks.html",
+  "pages/profile.html",
+  "pages/sobre.html",
+  "pages/notes.html",
+  "assets/css/styles.css",
+  "assets/images/logo.svg",
+  "assets/js/app.js",
+  "assets/js/firebase.js",
+  "assets/js/modules/UI.js",
+  "assets/js/modules/api.js",
+  "assets/js/modules/notes.js",
+  "manifest.webmanifest",
+  "manifest.json",
+  "pages/offline.html"
+].map((path) => new URL(path, APP_BASE_URL).href);
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
@@ -48,6 +51,23 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
+  if (event.request.destination === "image") {
+    event.respondWith((async () => {
+      const cache = await caches.open(CACHE_NAME);
+      const cachedImage = await cache.match(event.request);
+      if (cachedImage) {
+        return cachedImage;
+      }
+
+      const imageResponse = await fetch(event.request);
+      if (imageResponse.ok || imageResponse.type === "opaque") {
+        await cache.put(event.request, imageResponse.clone());
+      }
+      return imageResponse;
+    })());
+    return;
+  }
+
   const requestUrl = new URL(event.request.url);
   if (requestUrl.origin !== self.location.origin) {
     return;
@@ -68,7 +88,7 @@ self.addEventListener("fetch", (event) => {
           return cachedPage;
         }
 
-        const offlinePage = await caches.match("./pages/offline.html");
+        const offlinePage = await caches.match(new URL("pages/offline.html", APP_BASE_URL).href);
         if (offlinePage) {
           return offlinePage;
         }
